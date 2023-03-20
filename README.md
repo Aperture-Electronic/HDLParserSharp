@@ -8,7 +8,7 @@ And, we construct a C# class for ASTs, using many modern and efficiency C# langu
 Then, we re-write the parser library in C# to generate the ANTLR4 objects to the AST.
 
 ## The hdlConvertor library
-The [Nic30/hdlConvertor](https://github.com/Nic30/hdlConvertor) is a System Verilog and VHDL parser library, 
+The [Nic30/hdlConvertor](https://github.com/Nic30/hdlConvertor) is a System Verilog and VHDL parser library (MIT License), 
 which contains 
 * ANTLR4 generated VHDL/(System) Verilog parser with full language support;
 * Convertors from raw VHDL/SV AST to universal HDL AST;
