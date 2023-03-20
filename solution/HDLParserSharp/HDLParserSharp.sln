@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemVerilog2017Interpreter", "SystemVerilog2017Interpreter\SystemVerilog2017Interpreter.csproj", "{36E3F7E5-12A7-4700-BBDA-355D7367FE57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDLAbstractSyntaxTree", "HDLAbstractSyntaxTree\HDLAbstractSyntaxTree.csproj", "{4D50EEB4-E405-4A7E-AA07-436C49106550}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDLParserSharp", "HDLParserSharp\HDLParserSharp.csproj", "{8DADEEBF-4674-4E70-92A2-26EF0B17FEF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDLParserBase", "HDLParserBase\HDLParserBase.csproj", "{C85B7F40-24DE-4DAC-83A1-733148FB194C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHDLParserSharp", "TestHDLParserSharp\TestHDLParserSharp.csproj", "{6D6FDC6C-D649-41A2-A5DD-DEFBE386B883}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36E3F7E5-12A7-4700-BBDA-355D7367FE57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E3F7E5-12A7-4700-BBDA-355D7367FE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E3F7E5-12A7-4700-BBDA-355D7367FE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E3F7E5-12A7-4700-BBDA-355D7367FE57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D50EEB4-E405-4A7E-AA07-436C49106550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D50EEB4-E405-4A7E-AA07-436C49106550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D50EEB4-E405-4A7E-AA07-436C49106550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D50EEB4-E405-4A7E-AA07-436C49106550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DADEEBF-4674-4E70-92A2-26EF0B17FEF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DADEEBF-4674-4E70-92A2-26EF0B17FEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DADEEBF-4674-4E70-92A2-26EF0B17FEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DADEEBF-4674-4E70-92A2-26EF0B17FEF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C85B7F40-24DE-4DAC-83A1-733148FB194C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C85B7F40-24DE-4DAC-83A1-733148FB194C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C85B7F40-24DE-4DAC-83A1-733148FB194C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C85B7F40-24DE-4DAC-83A1-733148FB194C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D6FDC6C-D649-41A2-A5DD-DEFBE386B883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D6FDC6C-D649-41A2-A5DD-DEFBE386B883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D6FDC6C-D649-41A2-A5DD-DEFBE386B883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D6FDC6C-D649-41A2-A5DD-DEFBE386B883}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7CD12EF0-8B9D-4523-ADDA-C69836A0FE3D}
+	EndGlobalSection
+EndGlobal
