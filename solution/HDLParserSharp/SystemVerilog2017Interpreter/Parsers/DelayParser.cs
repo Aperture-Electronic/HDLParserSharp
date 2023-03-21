@@ -149,7 +149,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             var psIdentifierContext = context.ps_identifier();
             if (psIdentifierContext != null)
             {
-                return ExpressionParser.VisitPsIdentifier(psIdentifierContext);
+                return ExpressionParser.VisitPackageScopeIdentifier(psIdentifierContext);
             }
 
             throw new Exception("Excepted a delay value");

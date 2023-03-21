@@ -54,7 +54,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             throw new Exception("No valid left value in context");
         }
 
-        public Expression VisitPackageScope(Package_scopeContext context)
+        public static Expression VisitPackageScope(Package_scopeContext context)
         {
             var systemCall = context.KW_DOLAR_UNIT();
             if (systemCall != null)
@@ -73,7 +73,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             throw new Exception("No valid package scope in context");
         }
 
-        public Expression VisitPackageScopeIdentifier(Ps_identifierContext context)
+        public static Expression VisitPackageScopeIdentifier(Ps_identifierContext context)
         {
             var idContext = context.identifier();
             if (idContext == null)
@@ -127,6 +127,15 @@ namespace SystemVerilog2017Interpreter.Parsers
 
         public Expression VisitVariableLeftValue(Variable_lvalueContext variableContext) => throw new NotImplementedException();
 
+        public Expression VisitIdentifierDotedIndexAtEnd(Identifier_doted_index_at_endContext context)
+        {
+            var identifier = context.identifier();
+            throw new NotImplementedException();
+        }
+
+        public Expression VisitExpression(ExpressionContext expressionContext) => throw new NotImplementedException();
+        
+        public Expression VisitConcatenation(ConcatenationContext concatenationContext) => throw new NotImplementedException();
 
         public static string GetIdentifierString(IdentifierContext context)
         {
@@ -156,21 +165,19 @@ namespace SystemVerilog2017Interpreter.Parsers
             throw new NotImplementedException();
         }
 
-        public Expression VisitIdentifierDotedIndexAtEnd(Identifier_doted_index_at_endContext context)
-        {
-            var identifier = context.identifier();
-            throw new NotImplementedException();    
-        }
+        public Expression VisitMintypmaxExpression(Mintypmax_expressionContext minTypemaxContext) => throw new NotImplementedException();
 
-        public Expression VisitExpression(ExpressionContext expressionContext) => throw new NotImplementedException();
+        public Expression VisitBitSelect(Bit_selectContext bitSelectContext, Expression primary) => throw new NotImplementedException();
+
+        public Expression VisitIdentifierWithBitSelect(Identifier_with_bit_selectContext idWithBitSelectContext, object value) => throw new NotImplementedException();
+
+        public Expression VisitPackageOrClassScopedHierIdWithSelect(Package_or_class_scoped_hier_id_with_selectContext pkgClassScopedHierIdWithSelContext) => throw new NotImplementedException();
+
+
         public List<Expression> VisitParameterValueAssignment(Parameter_value_assignmentContext context) => throw new NotImplementedException();
-        internal Expression VisitPackageOrClassScopedPath(Package_or_class_scoped_pathContext pkgClassScoped) => throw new NotImplementedException();
-        internal Expression VisitMintypmaxExpression(Mintypmax_expressionContext minTypemaxContext) => throw new NotImplementedException();
-        internal Expression VisitIdentifierWithBitSelect(Identifier_with_bit_selectContext idWithBitSelectContext, object value) => throw new NotImplementedException();
-        internal Expression VisitBitSelect(Bit_selectContext bitSelectContext, Expression primary) => throw new NotImplementedException();
-        internal Expression VisitConcatenation(ConcatenationContext concatenationContext) => throw new NotImplementedException();
-        internal void VisitArguments(List_of_argumentsContext argumentsContext, List<Expression> arguments) => throw new NotImplementedException();
-        internal Expression VisitPackageOrClassScopedHierIdWithSelect(Package_or_class_scoped_hier_id_with_selectContext pkgClassScopedHierIdWithSelContext) => throw new NotImplementedException();
-        internal static Expression VisitPsIdentifier(Ps_identifierContext psIdentifierContext) => throw new NotImplementedException();
+
+        public Expression VisitPackageOrClassScopedPath(Package_or_class_scoped_pathContext pkgClassScoped) => throw new NotImplementedException();
+
+        public void VisitArguments(List_of_argumentsContext argumentsContext, List<Expression> arguments) => throw new NotImplementedException();
     }
 }
