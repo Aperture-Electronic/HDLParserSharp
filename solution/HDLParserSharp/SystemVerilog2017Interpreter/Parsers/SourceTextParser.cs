@@ -39,7 +39,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             //                               ) TIME_LITERAL )? SEMI
             //   | KW_TIMEPRECISION TIME_LITERAL SEMI ( KW_TIMEUNIT TIME_LITERAL SEMI )?
             //  ;
-#warning Time unit declaration is not implemented now
+#warning Time units declaration is not implemented now
         }
 
 
@@ -77,7 +77,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             var udpDeclarationContext = context.udp_declaration();
             if (udpDeclarationContext != null)
             {
-#warning UDP declaration is not implemented now
+#warning User defined primtive declaration is not implemented now
                 return;
             }
 

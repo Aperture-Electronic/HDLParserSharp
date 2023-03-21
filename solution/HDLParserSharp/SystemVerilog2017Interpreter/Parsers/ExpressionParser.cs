@@ -166,5 +166,6 @@ namespace SystemVerilog2017Interpreter.Parsers
         public List<Expression> VisitParameterValueAssignment(Parameter_value_assignmentContext context) => throw new NotImplementedException();
         internal Expression VisitPackageOrClassScopedPath(Package_or_class_scoped_pathContext pkgClassScoped) => throw new NotImplementedException();
         internal Expression VisitMintypmaxExpression(Mintypmax_expressionContext minTypemaxContext) => throw new NotImplementedException();
+        internal Expression VisitIdentifierWithBitSelect(Identifier_with_bit_selectContext idWithBitSelectContext, object value) => throw new NotImplementedException();
     }
 }

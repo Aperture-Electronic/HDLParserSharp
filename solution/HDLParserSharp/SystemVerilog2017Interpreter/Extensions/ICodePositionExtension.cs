@@ -5,6 +5,7 @@ using System.Text;
 using Antlr4.Runtime.Tree;
 using Antlr4.Runtime;
 using HDLAbstractSyntaxTree.Common;
+using HDLParserBase;
 
 namespace SystemVerilog2017Interpreter.Extensions
 {
@@ -31,6 +32,17 @@ namespace SystemVerilog2017Interpreter.Extensions
             }
 
             return position;
+        }
+
+        public static T UpdateDocument<T> (this T document, ParserRuleContext context, BaseCommentParser parser) 
+            where T : IDocumented
+        {
+            if ((context != null) && (parser != null))
+            {
+                document.Document = parser.Parse(context);
+            }
+
+            return document;
         }
     }
 }
