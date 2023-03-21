@@ -18,5 +18,23 @@ namespace HDLAbstractSyntaxTree.Expressions
             Name = name;
             ModuleName = moduleName;
         }
+
+        public void SetGenericMap(IEnumerable<Expression>? map)
+        {
+            if (map != null)
+            {
+                GenericMap.Clear();
+                GenericMap.AddRange(map);
+            }
+        }
+
+        public void SetPortMap(IEnumerable<Expression>? portMap)
+        {
+            if (portMap != null)
+            {
+                PortMap.Clear();
+                PortMap.AddRange(portMap);
+            }
+        }
     }
 }

@@ -483,29 +483,32 @@ namespace SystemVerilog2017Interpreter.Parsers
             throw new Exception("Unexpected primary literal");
         }
 
-        public Expression VisitAnySystemTaskFunctionIdentifier(Any_system_tf_identifierContext context) =>
-            // any_system_tf_identifier:
-            //     SYSTEM_TF_IDENTIFIER
-            //     | KW_DOLAR_SETUPHOLD
-            //     | KW_DOLAR_SETUP
-            //     | KW_DOLAR_FULLSKEW
-            //     | KW_DOLAR_WARNING
-            //     | KW_DOLAR_WIDTH
-            //     | KW_DOLAR_ROOT
-            //     | KW_DOLAR_RECOVERY
-            //     | KW_DOLAR_SKEW
-            //     | KW_DOLAR_FATAL
-            //     | KW_DOLAR_REMOVAL
-            //     | KW_DOLAR_RECREM
-            //     | KW_DOLAR_ERROR
-            //     | KW_DOLAR_PERIOD
-            //     | KW_DOLAR_HOLD
-            //     | KW_DOLAR_INFO
-            //     | KW_DOLAR_UNIT
-            //     | KW_DOLAR_TIMESKEW
-            //     | KW_DOLAR_NOCHANGE
-            // ;
-            new Identifier(context.GetText()).UpdateCodePosition(context);
-
+        /// <summary>
+        /// any_system_tf_identifier:
+        ///     SYSTEM_TF_IDENTIFIER
+        ///     | KW_DOLAR_SETUPHOLD
+        ///     | KW_DOLAR_SETUP
+        ///     | KW_DOLAR_FULLSKEW
+        ///     | KW_DOLAR_WARNING
+        ///     | KW_DOLAR_WIDTH
+        ///     | KW_DOLAR_ROOT
+        ///     | KW_DOLAR_RECOVERY
+        ///     | KW_DOLAR_SKEW
+        ///     | KW_DOLAR_FATAL
+        ///     | KW_DOLAR_REMOVAL
+        ///     | KW_DOLAR_RECREM
+        ///     | KW_DOLAR_ERROR
+        ///     | KW_DOLAR_PERIOD
+        ///     | KW_DOLAR_HOLD
+        ///     | KW_DOLAR_INFO
+        ///     | KW_DOLAR_UNIT
+        ///     | KW_DOLAR_TIMESKEW
+        ///     | KW_DOLAR_NOCHANGE
+        /// ;
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static Expression VisitAnySystemTaskFunctionIdentifier(Any_system_tf_identifierContext context)
+            => new Identifier(context.GetText()).UpdateCodePosition(context);
     }
 }

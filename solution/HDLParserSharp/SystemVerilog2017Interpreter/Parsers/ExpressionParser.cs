@@ -167,5 +167,10 @@ namespace SystemVerilog2017Interpreter.Parsers
         internal Expression VisitPackageOrClassScopedPath(Package_or_class_scoped_pathContext pkgClassScoped) => throw new NotImplementedException();
         internal Expression VisitMintypmaxExpression(Mintypmax_expressionContext minTypemaxContext) => throw new NotImplementedException();
         internal Expression VisitIdentifierWithBitSelect(Identifier_with_bit_selectContext idWithBitSelectContext, object value) => throw new NotImplementedException();
+        internal Expression VisitBitSelect(Bit_selectContext bitSelectContext, Expression primary) => throw new NotImplementedException();
+        internal Expression VisitConcatenation(ConcatenationContext concatenationContext) => throw new NotImplementedException();
+        internal void VisitArguments(List_of_argumentsContext argumentsContext, List<Expression> arguments) => throw new NotImplementedException();
+        internal Expression VisitPackageOrClassScopedHierIdWithSelect(Package_or_class_scoped_hier_id_with_selectContext pkgClassScopedHierIdWithSelContext) => throw new NotImplementedException();
+        internal static Expression VisitPsIdentifier(Ps_identifierContext psIdentifierContext) => throw new NotImplementedException();
     }
 }

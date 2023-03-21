@@ -14,12 +14,13 @@ The re-wrote files/functions are list as follows
 | Attribute Parser | OK |
 | Comment Parser | OK |
 | Declaration Parser | OK |
-| Delay Parser | **NO** |
+| Delay Parser | OK |
+| Event Expression Parser | OK |
 | Expression Parser | **NO** |
-| Expression Primary Parser | **NO** |
+| Expression Primary Parser | OK |
 | Generate Parser | OK |
 | Literal Parser | OK |
-| Module Instance Parser | **NO** |
+| Module Instance Parser | OK |
 | Module Parser | OK |
 | Parameter Definition Parser | OK |
 | Port Parser | OK |
@@ -37,27 +38,44 @@ We are working hard to try to implement these features in future.
 
 The features not implemented are list as follows
 
-| Feature | Associated Statement | File |
+| Feature | Associated Statement | File | Status |
 | -- | -- | -- |
+|Array method name|Expression(primary)|ExpressionPrimaryParser.cs|
 |Asseration Item|Generate|GenerateParser.cs|
+|Assignment pattern expression type|Expression(primary)|ExpressionPrimaryParser.cs|
+|Attribute instance of named port connection|Module Instance|ModuleInstanceParser.cs
+|Attribute instance of ordered port connection|Module Instance|ModuleInstanceParser.cs
 |Bi-direction arrow|Literal|LiteralParser.cs|
 |Bind directive|Source|SourceTextParser.cs|
 |Charge strength|Module|ModuleParser.cs|
 |Checker declaration|Generate|GenerateParser.cs|
 |Clocking declaration|Generate|GenerateParser.cs|
+|Clocking event|Expression(primary)|ExpressionPrimaryParser.cs|
 |Configuration declaration|Source|SourceTextParser.cs|
+|Constant expression assignment patternExpression(primary)|ExpressionPrimaryParser.cs|
 |Cover group declaration|Generate|GenerateParser.cs|
+|Cycle delay|Delay|DelayParser.cs|
 |Delay 3 sentence|Module|ModuleParser.cs|
 |Drive strength|Module|ModuleParser.cs|
+|Edge type identifier|EventExpression|EventExpressionParser.cs|Not fully implemented|
+|Integer type of assignment pattern key|Expression(primary)|ExpressionPrimaryParser.cs|
 |Interconnect type (declaration)|Module|ModuleParser.cs|
 |Interface declaration|Module, Source|Parser.cs, SourceTextParser.cs|
 |Let declaration|Generate|GenerateParser.cs|
 |Module lifetime|Module|ModuleParser.cs|
+|Multiple event expression item|EventExpression|EventExpressionParser.cs|
+|Non-integer type of assignment pattern key|Expression(primary)|ExpressionPrimaryParser.cs|
 |Package declaration|Source|SourceTextParser.cs|
 |Pakcage import declaration|Module|ModuleParser.cs|
 |Package item declaration|Source|SourceTextParser.cs|
+|Primary cast|Expression(primary)|ExpressionPrimaryParser.cs|
+|Primary streaming concatenation|Expression(primary)|ExpressionPrimaryParser.cs|
 |Program declaration|Module, Source|ModuleParser.cs, SourceTextParser.cs|
 |Property declaration|Generate|GenerateParser.cs|
+|Randomize|Expression(primary)|ExpressionPrimaryParser.cs|
+|Randomize2|Expression(primary)|ExpressionPrimaryParser.cs|
+|Range cycle delay|Delay|DelayParser.cs|
+|Repeat delay or event control|Delay|DelayParser.cs|
 |Sequence declaration|Generate|GenerateParser.cs|
 |Specify block|Module|ModuleParser.cs|
 |Specparam declaration|Module|ModuleParser.cs|
@@ -65,4 +83,5 @@ The features not implemented are list as follows
 |Time units declaration|Module, Source|ModuleParser.cs, SourceTextParser.cs|
 |User defined primtive declaration|Source|SourceTextParser.cs|
 |Vectored net declaration|Module|ModuleParser.cs|
+|With primary call|Expression(primary)|ExpressionPrimaryParser.cs|
 

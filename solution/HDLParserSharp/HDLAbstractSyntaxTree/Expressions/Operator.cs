@@ -43,6 +43,9 @@ namespace HDLAbstractSyntaxTree.Expressions
         public static Operator Call(Expression expression, IEnumerable<Expression> operands)
             => new Operator(OperatorType.Call, expression, operands);
 
+        public static Operator Call(Expression expression, Expression operand)
+            => new Operator(OperatorType.Call, expression, operand);
+
         public static Operator Parametrization(Expression expression, IEnumerable<Expression> operands)
             => new Operator(OperatorType.Parametrization, expression, operands);
 
