@@ -110,8 +110,8 @@ namespace SystemVerilog2017Interpreter.Parsers
 #warning Assertion item is not implemented now
             }
 
-            var contAssingContext = context.continuous_assign();
-            if (contAssingContext != null)
+            var contAssignContext = context.continuous_assign();
+            if (contAssignContext != null)
             {
                 // TODO
             }

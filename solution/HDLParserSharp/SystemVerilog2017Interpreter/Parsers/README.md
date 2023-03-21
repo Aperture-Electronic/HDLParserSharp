@@ -18,13 +18,13 @@ The re-wrote files/functions are list as follows
 | Event Expression Parser | OK |
 | Expression Parser | OK |
 | Expression Primary Parser | OK |
-| Generate Parser | **NO** |
+| Generate Parser | **NO** (*Required statement parser*) |
 | Literal Parser | OK |
 | Module Instance Parser | OK |
 | Module Parser | OK |
 | Parameter Definition Parser | OK |
 | Port Parser | OK |
-| Program Parser | **NO** |
+| Program Parser | **NO** (*Required statement parser*) |
 | Source Text Parser | OK |
 | Statement Parser | **NO** |
 | Type Parser | OK |

@@ -9,17 +9,18 @@ namespace HDLAbstractSyntaxTree.Statement
     /// <summary>
     /// Statements of IF statement
     /// </summary>
-    public class IfStatement
+    public class IfStatement : HDLStatement
     {
-        public Expression Condition { get; }
-        public HDLObject TrueBody { get; }
-        public Dictionary<Expression, HDLObject>? ElseIfBodies { get; }
-        public HDLObject? FalseBody { get; }
+        public Expression Condition { get; set; }
+        public HDLObject TrueBody { get; set;  }
+        public Dictionary<Expression, HDLObject> ElseIfBodies { get; }
+        public HDLObject? FalseBody { get; set; }
 
         public IfStatement(Expression condition, HDLObject trueBody)
         {
             Condition = condition;
             TrueBody = trueBody;
+            ElseIfBodies = new Dictionary<Expression, HDLObject>();
         }
 
         public IfStatement(Expression condition, HDLObject trueBody, HDLObject falseBody)
