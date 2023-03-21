@@ -16,9 +16,9 @@ The re-wrote files/functions are list as follows
 | Declaration Parser | OK |
 | Delay Parser | OK |
 | Event Expression Parser | OK |
-| Expression Parser | **NO** |
+| Expression Parser | OK |
 | Expression Primary Parser | OK |
-| Generate Parser | OK |
+| Generate Parser | **NO** |
 | Literal Parser | OK |
 | Module Instance Parser | OK |
 | Module Parser | OK |
@@ -43,6 +43,7 @@ The features not implemented are list as follows
 |Array method name|Expression(primary)|ExpressionPrimaryParser.cs||
 |Asseration Item|Generate|GenerateParser.cs||
 |Assignment pattern expression type|Expression(primary)|ExpressionPrimaryParser.cs||
+|Assignment pattern variable left value|Expression|ExpressionParser.cs||
 |Attribute instance of named port connection|Module Instance|ModuleInstanceParser.cs||
 |Attribute instance of ordered port connection|Module Instance|ModuleInstanceParser.cs||
 |Bi-direction arrow|Literal|LiteralParser.cs||
@@ -56,15 +57,21 @@ The features not implemented are list as follows
 |Cover group declaration|Generate|GenerateParser.cs||
 |Cycle delay|Delay|DelayParser.cs||
 |Delay 3 sentence|Module|ModuleParser.cs||
+|Delay or event control|Expression|ExpressionParser.cs||
 |Drive strength|Module|ModuleParser.cs||
 |Edge type identifier|EventExpression|EventExpressionParser.cs|Not fully implemented||
+|Inside expression|Expression|ExpressionParser.cs||
 |Integer type of assignment pattern key|Expression(primary)|ExpressionPrimaryParser.cs||
 |Interconnect type (declaration)|Module|ModuleParser.cs||
 |Interface declaration|Module, Source|Parser.cs, SourceTextParser.cs||
 |Let declaration|Generate|GenerateParser.cs||
+|Mathces condition predicate|Expression|ExpressionParser.cs||
+|Matches expression is not implemented now|Expression|ExpressionParser.cs||
+|Mintypmax expression (type and max specified)|Expression|ExpressionParser.cs||
 |Module lifetime|Module|ModuleParser.cs||
 |Multiple event expression item|EventExpression|EventExpressionParser.cs||
 |Non-integer type of assignment pattern key|Expression(primary)|ExpressionPrimaryParser.cs||
+|Operator assignment|Expression|ExpressionParser.cs||
 |Package declaration|Source|SourceTextParser.cs||
 |Pakcage import declaration|Module|ModuleParser.cs||
 |Package item declaration|Source|SourceTextParser.cs||
@@ -79,8 +86,12 @@ The features not implemented are list as follows
 |Sequence declaration|Generate|GenerateParser.cs||
 |Specify block|Module|ModuleParser.cs||
 |Specparam declaration|Module|ModuleParser.cs||
+|Streaming concatenation|Expression|ExpressionParser.cs||
+|Tagged expression|Expression|ExpressionParser.cs||
 |Time literal|Literal|LiteralParser.cs||
 |Time units declaration|Module, Source|ModuleParser.cs, SourceTextParser.cs||
+|Triple AND condition predicate|Expression|ExpressionParser.cs||
+|Triple AND expression is not implemented now|Expression|ExpressionParser.cs||
 |User defined primtive declaration|Source|SourceTextParser.cs||
 |Vectored net declaration|Module|ModuleParser.cs||
 |With primary call|Expression(primary)|ExpressionPrimaryParser.cs||

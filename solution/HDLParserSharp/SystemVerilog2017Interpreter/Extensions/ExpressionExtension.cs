@@ -14,7 +14,7 @@ namespace SystemVerilog2017Interpreter.Extensions
     {
         public static Expression Append(this Expression? selectedName, ParserRuleContext context, OperatorType operatorJoin, Expression newPart)
             => selectedName == null ? newPart : new Operator(operatorJoin, selectedName, newPart).UpdateCodePosition(context);
-
+       
         public static Expression WireIdentifier => new Identifier("wire");
 
         public static Expression IntegerIdentifier => new Identifier("integer");

@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime.Tree;
 using HDLAbstractSyntaxTree.Common;
 using HDLAbstractSyntaxTree.Elements;
+using HDLAbstractSyntaxTree.Expressions;
 using HDLAbstractSyntaxTree.Types;
 using HDLAbstractSyntaxTree.Value;
 using HDLParserBase;
@@ -396,7 +397,7 @@ namespace SystemVerilog2017Interpreter.Parsers
                 _ => throw new Exception("Expected an assign operator")
             };
 
-        public OperatorType VisitIncreaseDecreaseOperator(Inc_or_dec_operatorContext context, bool prefix)
+        public static OperatorType VisitIncreaseDecreaseOperator(Inc_or_dec_operatorContext context, bool prefix)
         {
             if (prefix)
             {
@@ -510,5 +511,41 @@ namespace SystemVerilog2017Interpreter.Parsers
         /// <returns></returns>
         public static Expression VisitAnySystemTaskFunctionIdentifier(Any_system_tf_identifierContext context)
             => new Identifier(context.GetText()).UpdateCodePosition(context);
+
+        /// <summary>
+        /// assignment_operator:
+        ///    ASSIGN
+        ///    | PLUS_ASSIGN
+        ///    | MINUS_ASSIGN
+        ///    | MUL_ASSIGN
+        ///    | DIV_ASSIGN
+        ///    | MOD_ASSIGN
+        ///    | AND_ASSIGN
+        ///    | OR_ASSIGN
+        ///    | XOR_ASSIGN
+        ///    | SHIFT_LEFT_ASSIGN
+        ///    | SHIFT_RIGHT_ASSIGN
+        ///    | ARITH_SHIFT_LEFT_ASSIGN
+        ///    | ARITH_SHIFT_RIGHT_ASSIGN
+        /// ;
+        /// </summary>
+        public static OperatorType VisitAssignmentOperator(Assignment_operatorContext context)
+            => context.Start.Type switch
+            {
+                ASSIGN => OperatorType.Assign,
+                PLUS_ASSIGN => OperatorType.PlusAssign,
+                MINUS_ASSIGN => OperatorType.MinusAssign,
+                MUL_ASSIGN => OperatorType.MulAssign,
+	            DIV_ASSIGN => OperatorType.DivAssign,
+	            MOD_ASSIGN => OperatorType.ModAssign,
+	            AND_ASSIGN => OperatorType.AndAssign,
+	            OR_ASSIGN => OperatorType.OrAssign,
+	            XOR_ASSIGN => OperatorType.XorAssign,
+	            SHIFT_LEFT_ASSIGN => OperatorType.ShiftLeftAssign,
+	            SHIFT_RIGHT_ASSIGN => OperatorType.ShiftRightAssign,
+	            ARITH_SHIFT_LEFT_ASSIGN => OperatorType.ArithShiftLeftAssign,
+	            ARITH_SHIFT_RIGHT_ASSIGN => OperatorType.ArithShiftRightAssign,
+                _ => throw new Exception("Invalid assignment operator");
+            };
     }
 }

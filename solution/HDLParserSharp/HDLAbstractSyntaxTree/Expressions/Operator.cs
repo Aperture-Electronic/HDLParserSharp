@@ -63,7 +63,7 @@ namespace HDLAbstractSyntaxTree.Expressions
             return op;
         }
     
-        public static Expression Reduce(IEnumerable<Operator> operators, OperatorType concatType = OperatorType.Concat)
+        public static Expression Reduce(IEnumerable<Expression> operators, OperatorType concatType = OperatorType.Concat)
         {
             Expression? res = null;
             foreach (Operator op in operators)

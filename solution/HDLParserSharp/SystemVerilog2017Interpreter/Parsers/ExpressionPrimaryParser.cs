@@ -16,7 +16,7 @@ namespace SystemVerilog2017Interpreter.Parsers
     {
         public ExpressionPrimaryParser(HDLParser other) : base(other) { }
 
-        Expression VisitPrimary(PrimaryContext context)
+        public Expression VisitPrimary(PrimaryContext context)
         {
             #region Primary expression comment
             // primary:

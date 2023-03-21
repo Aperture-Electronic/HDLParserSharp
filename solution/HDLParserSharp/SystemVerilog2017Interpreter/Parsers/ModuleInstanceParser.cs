@@ -158,7 +158,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         ///    | named_parameter_assignment (',' named_parameter_assignment)*
         ///    ;
         /// </summary>
-        private IEnumerable<Expression> VisitParameterValueAssignments(List_of_parameter_value_assignmentsContext context)
+        public IEnumerable<Expression> VisitParameterValueAssignments(List_of_parameter_value_assignmentsContext context)
         {
             var paramExpressionContext = context.param_expression();
             ParameterDefinitionParser parameterDefinitionParser = new ParameterDefinitionParser(this);
