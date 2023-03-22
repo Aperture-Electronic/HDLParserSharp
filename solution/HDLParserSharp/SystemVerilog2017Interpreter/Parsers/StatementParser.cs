@@ -754,7 +754,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         ///     )
         /// ;
         /// </summary>
-        private void VisitBlockItemDeclaration(Block_item_declarationContext context, List<HDLObject> objects)
+        public void VisitBlockItemDeclaration(Block_item_declarationContext context, List<HDLObject> objects)
         {
             AttributeParser.VisitAttributeInstance(context.attribute_instance());
 
@@ -880,7 +880,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         ///     | ( attribute_instance )* SEMI
         /// ;
         /// </summary>
-        private HDLStatement? VisitStatementOrNull(Statement_or_nullContext context)
+        public HDLStatement? VisitStatementOrNull(Statement_or_nullContext context)
         {
             if (context == null)
                 return null;

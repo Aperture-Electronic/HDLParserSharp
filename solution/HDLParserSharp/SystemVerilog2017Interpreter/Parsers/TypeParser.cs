@@ -466,7 +466,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         public Expression VisitNetType(Net_typeContext context)
             => new Identifier(context.GetText()).UpdateCodePosition(context);
 
-        public Expression? VisitNetPortType(Net_port_typeContext? context)
+        public Expression VisitNetPortType(Net_port_typeContext? context)
         {
             if (context == null)
             {

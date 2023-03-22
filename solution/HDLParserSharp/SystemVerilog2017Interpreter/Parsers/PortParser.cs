@@ -106,6 +106,54 @@ namespace SystemVerilog2017Interpreter.Parsers
             return new IdentifierDefinition(identifier, size, null).UpdateCodePosition(context);
         }
 
+        /// <summary>
+        /// list_of_tf_variable_identifiers:
+        ///     list_of_tf_variable_identifiers_item
+        ///     ( COMMA list_of_tf_variable_identifiers_item )*
+        /// ;
+        /// </summary>
+        public void VisitTaskFunctionVariableIdentifiers(List_of_tf_variable_identifiersContext context, 
+            Expression baseType, bool isLatched, Direction direction, string document, List<IdentifierDefinition> ports)
+        {
+            TypeParser typeParser = new TypeParser(this);
+            ExpressionParser expressionParser = new ExpressionParser(this);
+
+            bool first = true;
+
+            var tfVariableIdentifierContext = context.list_of_tf_variable_identifiers_item();
+            foreach (var tfVariableIdentifier in tfVariableIdentifierContext)
+            {
+                // list_of_tf_variable_identifiers_item: identifier ( variable_dimension )* ( ASSIGN expression )?
+                Expression type = first ? baseType : baseType.Clone();
+
+                var varDimensionContext = tfVariableIdentifier.variable_dimension();
+                type = typeParser.ApplyVariableDimension(type, varDimensionContext);
+                var identifierContext = tfVariableIdentifier.identifier();
+                string name = ExpressionParser.GetIdentifierString(identifierContext);
+                var defaultValueContext = tfVariableIdentifier.expression();
+                Expression? defaultValue = (defaultValueContext != null) ?
+                                           expressionParser.VisitExpression(defaultValueContext) :
+                                           null;
+
+                IdentifierDefinition portDefinition = 
+                    new IdentifierDefinition(name, type, defaultValue);
+
+                if (first)
+                {
+                    portDefinition.Document = document;
+                }
+
+                portDefinition.IsLatched = isLatched;
+                portDefinition.Direction = direction;
+
+                first &= false;
+
+                ports.Add(portDefinition);
+            }
+        }
+
+        internal void VisitTaskFunctionPortList(Tf_port_listContext portListContext, List<IdentifierDefinition> arguments) => throw new NotImplementedException();
+
         public IEnumerable<IdentifierDefinition> VisitPortDeclarations(List_of_port_declarationsContext context)
         {
             foreach (var port in context.nonansi_port())
@@ -214,9 +262,68 @@ namespace SystemVerilog2017Interpreter.Parsers
             return (identifierDef, typeExpression);
         }
 
+        /// <summary>
+        /// nonansi_port_declaration:
+        ///    ( attribute_instance )* (
+        ///    KW_INOUT ( net_port_type )? list_of_variable_identifiers
+        ///   | KW_INPUT ( net_or_var_data_type )? list_of_variable_identifiers
+        ///   | KW_OUTPUT ( net_or_var_data_type )? list_of_variable_port_identifiers
+        ///   | identifier ( DOT identifier )? list_of_variable_identifiers // identifier=interface_identifier
+        ///   | KW_REF ( var_data_type )? list_of_variable_identifiers
+        ///   )
+        /// ;
+        /// </summary>
         public void VisitNonANSIPortDeclaration(Nonansi_port_declarationContext context, List<IdentifierDefinition> identifiers)
         {
+            string document = CommentParser.Parse(context);
+            var attributeContext = context.attribute_instance();
+            AttributeParser.VisitAttributeInstance(attributeContext);
 
+            TypeParser typeParser = new TypeParser(this);
+
+            var varIdentifierContext = context.list_of_variable_identifiers();
+            if (context.KW_INOUT() != null)
+            {
+                var netPortType = typeParser.VisitNetPortType(context.net_port_type());
+                VisitVariableIdentifiers(varIdentifierContext, netPortType, false, Direction.Inout, document, identifiers);
+            }
+            else if (context.KW_INPUT() != null)
+            {
+                (Expression type, bool isLatched) = typeParser.VisitNetOrVariableDataType(context.net_or_var_data_type()); ;
+                VisitVariableIdentifiers(varIdentifierContext, type, isLatched, Direction.In, document, identifiers);
+            }
+            else if (context.KW_OUTPUT() != null)
+            {
+                (Expression type, bool isLatched) = typeParser.VisitNetOrVariableDataType(context.net_or_var_data_type()); ;
+                var varPortIdentifierContext = context.list_of_variable_port_identifiers();
+                VisitVariablePortIdentifiers(varPortIdentifierContext, type, isLatched, Direction.Out, document, identifiers);
+            }
+            else
+            {
+                var identifierContext = context.identifier();
+                if (identifierContext.Any())
+                {
+                    Expression type = ExpressionParser.VisitIdentifier(identifierContext.First());
+                    if (identifierContext.Length > 1)
+                    {
+                        if (identifierContext.Length != 2)
+                        {
+                            throw new Exception("Invalid type identifier for non-ANSI port");
+                        }
+
+                        type = new Operator(OperatorType.Dot, type, ExpressionParser.VisitIdentifier(identifierContext.Last()));
+                    }
+
+                    VisitVariableIdentifiers(varIdentifierContext, type, false, Direction.Linkage, document, identifiers);
+                }
+                else
+                {
+                    var varDataTypeContext = context.var_data_type();
+                    Expression variableDataType = typeParser.VisitVaribaleDataType(varDataTypeContext);
+                    VisitVariableIdentifiers(varIdentifierContext, variableDataType, false,
+                        Direction.Linkage, document, identifiers);
+                }
+            }
         }
 
         public void VisitVariablePortIdentifiers(List_of_variable_port_identifiersContext context,
@@ -259,13 +366,26 @@ namespace SystemVerilog2017Interpreter.Parsers
         }
 
         public Direction VisitPortDirection(Port_directionContext context)
-        {
-            if (context.KW_INPUT() != null) return Direction.In;
-            else if (context.KW_OUTPUT() != null) return Direction.Out; 
-            else if (context.KW_INOUT() != null) return Direction.Inout;
-            else if (context.KW_REF() != null) return Direction.Linkage;
+            => false switch
+            {
+                _ when (context.KW_INPUT() != null) => Direction.In,
+                _ when (context.KW_OUTPUT() != null) => Direction.Out,
+                _ when (context.KW_INOUT() != null) => Direction.Inout,
+                _ when (context.KW_REF() != null) => Direction.Linkage,
+                _ =>  throw new Exception("Invalid port direction definition")
+            };
 
-            throw new Exception("Invalid port direction definition");
-        }
+        /// <summary>
+        /// tf_port_direction:
+        ///     KW_CONST KW_REF
+        ///     | port_direction
+        /// ;
+        /// </summary>
+        public Direction VisitTaskFunctionPortDirection(Tf_port_directionContext context)
+            => false switch
+            {
+                _ when (context.KW_REF() != null) => Direction.Linkage,
+                _ => VisitPortDirection(context.port_direction())
+            };
     }
 }
