@@ -545,7 +545,7 @@ namespace SystemVerilog2017Interpreter.Parsers
 	            SHIFT_RIGHT_ASSIGN => OperatorType.ShiftRightAssign,
 	            ARITH_SHIFT_LEFT_ASSIGN => OperatorType.ArithShiftLeftAssign,
 	            ARITH_SHIFT_RIGHT_ASSIGN => OperatorType.ArithShiftRightAssign,
-                _ => throw new Exception("Invalid assignment operator");
+                _ => throw new Exception("Invalid assignment operator")
             };
     }
 }

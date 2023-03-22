@@ -24,11 +24,17 @@ namespace HDLAbstractSyntaxTree.Statement
         /// </summary>
         public HDLStatement? Body { get; }
 
-        public ProcessStatement(List<Expression> sensitivityList, HDLStatement? body)
+        public ProcessStatement(HDLStatement? body, ProcessTriggerConstrain triggerConstrain = ProcessTriggerConstrain.Always)
         {
-            TriggerConstrain = ProcessTriggerConstrain.Always;
-            SensitivityList = sensitivityList;
+            TriggerConstrain = triggerConstrain;
+            SensitivityList = new List<Expression>();
             Body = body;
+        }
+
+        public ProcessStatement(IEnumerable<Expression> sensitivityList, HDLStatement? body, ProcessTriggerConstrain triggerConstrain = ProcessTriggerConstrain.Always)
+            : this(body, triggerConstrain)
+        {
+            SensitivityList.AddRange(sensitivityList);
         }
     }
 }

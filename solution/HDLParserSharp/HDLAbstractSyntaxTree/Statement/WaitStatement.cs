@@ -13,5 +13,7 @@ namespace HDLAbstractSyntaxTree.Statement
         public WaitStatement(Expression value) => Values.Add(value);
 
         public WaitStatement(List<Expression> values) => Values.AddRange(values);
+
+        public WaitStatement() { }
     }
 }

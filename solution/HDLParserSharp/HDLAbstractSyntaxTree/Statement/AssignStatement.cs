@@ -28,15 +28,24 @@ namespace HDLAbstractSyntaxTree.Statement
         /// </summary>
         public List<Expression>? EventDelay { get; }
 
-        public bool IsBlocking { get; }
+        public bool IsBlocking { get; set; }
 
         public AssignStatement(Expression source, Expression destination,
-            Expression? timeDelay, List<Expression>? eventDelay, bool isBlocking)
+            Expression? timeDelay, IEnumerable<Expression>? eventDelay, bool isBlocking)
         {
             Source = source;
             Destination = destination;
             TimeDelay = timeDelay;
-            EventDelay = eventDelay;
+
+            if (eventDelay != null)
+            {
+                EventDelay = new List<Expression>(eventDelay);
+            }
+            else
+            {
+                EventDelay = new List<Expression>();
+            }
+            
             IsBlocking = isBlocking;
         }
 

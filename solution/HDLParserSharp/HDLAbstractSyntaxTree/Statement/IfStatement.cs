@@ -12,25 +12,26 @@ namespace HDLAbstractSyntaxTree.Statement
     public class IfStatement : HDLStatement
     {
         public Expression Condition { get; set; }
-        public HDLObject TrueBody { get; set;  }
-        public Dictionary<Expression, HDLObject> ElseIfBodies { get; }
+        public HDLObject? TrueBody { get; set;  }
+        public Dictionary<Expression, HDLObject?> ElseIfBodies { get; }
         public HDLObject? FalseBody { get; set; }
 
-        public IfStatement(Expression condition, HDLObject trueBody)
+        public IfStatement(Expression condition, HDLObject? trueBody)
         {
             Condition = condition;
             TrueBody = trueBody;
-            ElseIfBodies = new Dictionary<Expression, HDLObject>();
+            ElseIfBodies = new Dictionary<Expression, HDLObject?>();
+            FalseBody = null;
         }
 
-        public IfStatement(Expression condition, HDLObject trueBody, HDLObject falseBody)
+        public IfStatement(Expression condition, HDLObject? trueBody, HDLObject? falseBody)
             : this(condition, trueBody)
         {
             FalseBody = falseBody;
         }
 
-        public IfStatement(Expression condition, HDLObject trueBody, 
-            Dictionary<Expression, HDLObject> elseIfBodies, HDLObject falseBody)
+        public IfStatement(Expression condition, HDLObject? trueBody, 
+            Dictionary<Expression, HDLObject?> elseIfBodies, HDLObject? falseBody)
             : this(condition, trueBody, falseBody)
         {
             ElseIfBodies = elseIfBodies;

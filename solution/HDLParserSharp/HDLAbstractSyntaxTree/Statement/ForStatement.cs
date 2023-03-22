@@ -17,9 +17,9 @@ namespace HDLAbstractSyntaxTree.Statement
 
         public HDLStatement Step { get; set; }
 
-        public HDLObject Body { get; set; }
+        public HDLObject? Body { get; set; }
 
-        public ForStatement(HDLStatement initial, Expression condition, HDLStatement step, HDLObject body)
+        public ForStatement(HDLStatement initial, Expression condition, HDLStatement step, HDLObject? body)
         {
             Initial = initial;
             Condition = condition;

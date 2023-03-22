@@ -12,9 +12,9 @@ namespace HDLAbstractSyntaxTree.Statement
     public class WhileStatement : HDLStatement
     {
         public Expression Condition { get; }
-        public HDLStatement Body { get; }
+        public HDLStatement? Body { get; }
 
-        public WhileStatement(Expression condition, HDLStatement body)
+        public WhileStatement(Expression condition, HDLStatement? body)
         {
             Condition = condition;
             Body = body;

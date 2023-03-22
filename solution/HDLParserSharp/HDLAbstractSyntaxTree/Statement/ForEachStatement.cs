@@ -14,30 +14,30 @@ namespace HDLAbstractSyntaxTree.Statement
     {
         public List<HDLObject> Variables = new List<HDLObject>();
         public Expression Collection;
-        public HDLObject Body;
+        public HDLObject? Body;
 
-        public ForEachStatement(IdentifierDefinition variable, Expression collection, HDLObject body)
+        public ForEachStatement(IdentifierDefinition variable, Expression collection, HDLObject? body)
         {
             Variables.Add(variable);
             Collection = collection;
             Body = body;
         }
 
-        public ForEachStatement(Expression variable, Expression collection, HDLObject body)
+        public ForEachStatement(Expression variable, Expression collection, HDLObject? body)
         {
             Variables.Add(variable);
             Collection = collection;
             Body = body;
         }
 
-        public ForEachStatement(List<HDLObject> variables, Expression collection, HDLObject body)
+        public ForEachStatement(IEnumerable<HDLObject> variables, Expression collection, HDLObject? body)
         {
             Variables.AddRange(variables);
             Collection = collection;
             Body = body;
         }
 
-        public ForEachStatement(List<Expression> variables, Expression collection, HDLObject body)
+        public ForEachStatement(IEnumerable<Expression> variables, Expression collection, HDLObject? body)
         {
             Variables.AddRange(variables);
             Collection = collection;

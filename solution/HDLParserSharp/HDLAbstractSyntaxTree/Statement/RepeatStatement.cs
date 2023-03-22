@@ -12,9 +12,9 @@ namespace HDLAbstractSyntaxTree.Statement
     public class RepeatStatement : HDLStatement
     {
         Expression RepeatCount { get; }
-        HDLObject Body { get; }
+        HDLObject? Body { get; }
 
-        public RepeatStatement(Expression repeatCount, HDLObject body)
+        public RepeatStatement(Expression repeatCount, HDLObject? body)
         {
             RepeatCount = repeatCount;
             Body = body;

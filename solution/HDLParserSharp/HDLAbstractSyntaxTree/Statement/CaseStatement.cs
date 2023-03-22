@@ -14,11 +14,11 @@ namespace HDLAbstractSyntaxTree.Statement
 
         public Expression SelectOn { get; set; }
 
-        public Dictionary<Expression, HDLObject> Cases { get; set; }
+        public Dictionary<Expression, HDLObject?> Cases { get; set; }
 
         public HDLObject? Default { get; set; }
 
-        public CaseStatement(CaseType type, Expression selectOn, Dictionary<Expression, HDLObject> cases, HDLObject? defaultCase)
+        public CaseStatement(CaseType type, Expression selectOn, Dictionary<Expression, HDLObject?> cases, HDLObject? defaultCase)
         {
             UniqueConstrain = CaseUniqueConstrain.None;
             Type = type;
@@ -27,19 +27,19 @@ namespace HDLAbstractSyntaxTree.Statement
             Default = defaultCase;
         }
 
-        public CaseStatement(CaseType type, Expression selectOn, Dictionary<Expression, HDLObject> cases)
+        public CaseStatement(CaseType type, Expression selectOn, Dictionary<Expression, HDLObject?> cases)
             : this(type, selectOn, cases, null)
         {
 
         }
 
-        public CaseStatement(Expression selectOn, Dictionary<Expression, HDLObject> cases)
+        public CaseStatement(Expression selectOn, Dictionary<Expression, HDLObject?> cases)
             : this(CaseType.Case, selectOn, cases)
         {
             
         }
 
-        public CaseStatement(Expression selectOn, Dictionary<Expression, HDLObject> cases, HDLObject? defaultCase)
+        public CaseStatement(Expression selectOn, Dictionary<Expression, HDLObject?> cases, HDLObject? defaultCase)
             : this(CaseType.Case, selectOn, cases, defaultCase)
         {
 

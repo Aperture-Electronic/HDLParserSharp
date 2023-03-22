@@ -8,8 +8,10 @@ namespace HDLAbstractSyntaxTree.Statement
 {
     public class ReturnStatement : HDLStatement
     {
-        Expression Value { get; }
+        Expression? Value { get; }
 
         public ReturnStatement(Expression value) => Value = value;
+
+        public ReturnStatement() => Value = null;   
     }
 }

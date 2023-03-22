@@ -48,28 +48,35 @@ The features not implemented are list as follows
 |Attribute instance of ordered port connection|Module Instance|ModuleInstanceParser.cs||
 |Bi-direction arrow|Literal|LiteralParser.cs||
 |Bind directive|Source|SourceTextParser.cs||
+|Case statement inside|Statement|StatementParser.cs||
 |Charge strength|Module|ModuleParser.cs||
 |Checker declaration|Generate|GenerateParser.cs||
 |Clocking declaration|Generate|GenerateParser.cs||
+|Clocking drive statement|Statement|StatementParser.cs||
 |Clocking event|Expression(primary)|ExpressionPrimaryParser.cs||
 |Configuration declaration|Source|SourceTextParser.cs||
 |Constant expression assignment patternExpression(primary)|ExpressionPrimaryParser.cs||
 |Cover group declaration|Generate|GenerateParser.cs||
 |Cycle delay|Delay|DelayParser.cs||
-|Delay 3 sentence|Module|ModuleParser.cs||
-|Delay or event control|Expression|ExpressionParser.cs||
-|Drive strength|Module|ModuleParser.cs||
+|Delay 3 sentence|Module, Statement|ModuleParser.cs, StatementParser.cs||
+|Delay or event control|Expression, Statement|ExpressionParser.cs, StatementParser.cs||
+|Disable statement|Statement|StatementParser.cs||
+|Drive strength|Module, Statement|ModuleParser.cs, StatementParser.cs||
 |Edge type identifier|EventExpression|EventExpressionParser.cs|Not fully implemented||
+|Event trigger statement|Statement|StatementParser.cs||
+|Expect property statement|Statement|StatementParser.cs||
 |Inside expression|Expression|ExpressionParser.cs||
 |Integer type of assignment pattern key|Expression(primary)|ExpressionPrimaryParser.cs||
 |Interconnect type (declaration)|Module|ModuleParser.cs||
 |Interface declaration|Module, Source|Parser.cs, SourceTextParser.cs||
-|Let declaration|Generate|GenerateParser.cs||
+|Let declaration|Generate, Statement|GenerateParser.cs, StatementParser.cs||
 |Mathces condition predicate|Expression|ExpressionParser.cs||
 |Matches expression is not implemented now|Expression|ExpressionParser.cs||
 |Mintypmax expression (type and max specified)|Expression|ExpressionParser.cs||
 |Module lifetime|Module|ModuleParser.cs||
 |Multiple event expression item|EventExpression|EventExpressionParser.cs||
+|New class blocking assignment|Statement|StatementParser.cs||
+|New dynamic array of blocking assignment|Statement|StatementParser.cs||
 |Non-integer type of assignment pattern key|Expression(primary)|ExpressionPrimaryParser.cs||
 |Operator assignment|Expression|ExpressionParser.cs||
 |Package declaration|Source|SourceTextParser.cs||
@@ -77,10 +84,14 @@ The features not implemented are list as follows
 |Package item declaration|Source|SourceTextParser.cs||
 |Primary cast|Expression(primary)|ExpressionPrimaryParser.cs||
 |Primary streaming concatenation|Expression(primary)|ExpressionPrimaryParser.cs||
+|Procedural assertion statement|Statement|StatementParser.cs||
+|Procedural continuous assignment|Statement|StatementParser.cs||
 |Program declaration|Module, Source|ModuleParser.cs, SourceTextParser.cs||
 |Property declaration|Generate|GenerateParser.cs||
 |Randomize|Expression(primary)|ExpressionPrimaryParser.cs||
 |Randomize2|Expression(primary)|ExpressionPrimaryParser.cs||
+|Random case statement||Statement|StatementParser.cs||
+|Random sequence statement|Statement|StatementParser.cs||
 |Range cycle delay|Delay|DelayParser.cs||
 |Repeat delay or event control|Delay|DelayParser.cs||
 |Sequence declaration|Generate|GenerateParser.cs||
@@ -94,5 +105,6 @@ The features not implemented are list as follows
 |Triple AND expression is not implemented now|Expression|ExpressionParser.cs||
 |User defined primtive declaration|Source|SourceTextParser.cs||
 |Vectored net declaration|Module|ModuleParser.cs||
+|Wait statement|Statement|StatementParser.cs||
 |With primary call|Expression(primary)|ExpressionPrimaryParser.cs||
 

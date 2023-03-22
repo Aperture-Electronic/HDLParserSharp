@@ -215,7 +215,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         ///                   | ( data_type_or_implicit )? list_of_param_assignments
         ///                   );
         /// </summary>
-        private void VisitLocalParameterDeclaration(Local_parameter_declarationContext context, List<IdentifierDefinition> generics)
+        public void VisitLocalParameterDeclaration(Local_parameter_declarationContext context, List<IdentifierDefinition> generics)
         {
             int originalGenericsCount = generics.Count;
             if (context.KW_TYPE() != null)
