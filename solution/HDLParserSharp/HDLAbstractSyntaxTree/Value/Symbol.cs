@@ -14,5 +14,7 @@ namespace HDLAbstractSyntaxTree.Value
         public Symbol(SymbolType type) => Type = type;
 
         public override Expression Clone() => new Symbol(Type);
+
+        public override string ToString() => Type.GetSymbolString();
     }
 }

@@ -12,5 +12,7 @@ namespace HDLAbstractSyntaxTree.Value
         public Identifier(string name) => Name = name;
 
         public override Expression Clone() => new Identifier(Name);
+
+        public override string ToString() => Name;
     }
 }

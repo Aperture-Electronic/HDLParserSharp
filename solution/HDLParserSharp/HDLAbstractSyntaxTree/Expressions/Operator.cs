@@ -12,6 +12,8 @@ namespace HDLAbstractSyntaxTree.Expressions
         public OperatorType Type { get; set; }
         public List<Expression> Operands { get; } = new List<Expression>();
 
+        public Expression this[int index] => Operands[index];
+
         public Operator(OperatorType type) => Type = type;
         
         private Operator(OperatorType type, IEnumerable<Expression> operands) : this(type)
@@ -82,5 +84,20 @@ namespace HDLAbstractSyntaxTree.Expressions
         }
 
         public override Expression Clone() => new Operator(Type, Operands);
+
+        public override string ToString()
+        {
+            string operatorString = Type.GetOperatorString();
+            string[] operandPlacement = { "X", "Y", "Z" };
+            for (int i = 0; i < operandPlacement.Length; i++)
+            {
+                if (Operands.Count >= (i + 1))
+                {
+                    operatorString = operatorString.Replace(operandPlacement[i], Operands[i].ToString());
+                }
+            }
+
+            return operatorString;
+        }
     }
 }

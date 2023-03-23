@@ -15,5 +15,7 @@ namespace HDLAbstractSyntaxTree.Value
         public NotImplemented(string description = "") => Description = description;
 
         public override Expression Clone() => throw new NotImplementedException();
+
+        public override string ToString() => $"Not Impl. ({Description})";
     }
 }

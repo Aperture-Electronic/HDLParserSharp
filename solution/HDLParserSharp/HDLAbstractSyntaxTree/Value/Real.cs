@@ -12,5 +12,7 @@ namespace HDLAbstractSyntaxTree.Value
         public Real(double value) => Value = value;
 
         public override Expression Clone() => new Real(Value);
+
+        public override string ToString() => Value.ToString();
     }
 }

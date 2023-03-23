@@ -81,13 +81,13 @@ namespace SystemVerilog2017Interpreter.Parsers
             if (context.cycle_delay() != null)
             {
 #warning Cycle delay is not implemented now
-                return (new NotImplemented().UpdateCodePosition(context), null);
+                return (new NotImplemented("Cycle delay").UpdateCodePosition(context), null);
             }
 
             if (context.cycle_delay_range() != null)
             {
 #warning Range cycle delay is not implemented now
-                return (new NotImplemented().UpdateCodePosition(context), null);
+                return (new NotImplemented("Range cycle delay").UpdateCodePosition(context), null);
             }
 
             throw new Exception("Excepted an procedural timing control");

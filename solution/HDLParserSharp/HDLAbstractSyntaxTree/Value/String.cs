@@ -12,5 +12,7 @@ namespace HDLAbstractSyntaxTree.Value
         public String(string content) => Content = content;
 
         public override Expression Clone() => new String(Content);  
+
+        public override string ToString() => $"\"{Content}\"";
     }
 }

@@ -16,7 +16,7 @@ namespace HDLParserSharp
         SystemVerilog2009 = 6,
         SystemVerilog2012 = 7,
         SystemVerilog2017 = 8,
-        SystemVerilg = SystemVerilog2017,
+        SystemVerilog = SystemVerilog2017,
         HWT = 9,
         Invalid = int.MaxValue,
     }

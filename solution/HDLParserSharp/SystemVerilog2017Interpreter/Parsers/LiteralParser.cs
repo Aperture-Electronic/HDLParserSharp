@@ -67,7 +67,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         public static Expression VisitUnsignedNumber(ITerminalNode terminalNode)
         {
             string noSeparator = terminalNode.GetText().WithOutVerilogNumberSeparator();
-            return new Integer(noSeparator, BigInteger.Base.Decimal).UpdateCodePosition(terminalNode);
+            return new Integer(noSeparator, Integer.Base.Decimal).UpdateCodePosition(terminalNode);
         }
 
         public static Expression VisitAnyBasedNumber(Integral_numberContext context, string value, int size)
@@ -82,12 +82,12 @@ namespace SystemVerilog2017Interpreter.Parsers
             int valuePartStart = noSeparator[1] == 's' ? 3 : 2;
             char lowerRadix = char.ToLower(noSeparator[valuePartStart - 1]);
 
-            BigInteger.Base radix = lowerRadix switch
+            Integer.Base radix = lowerRadix switch
             {
-                'b' => BigInteger.Base.Binary,
-                'o' => BigInteger.Base.Octal,
-                'd' => BigInteger.Base.Decimal,
-                'h' => BigInteger.Base.Hexadecimal,
+                'b' => Integer.Base.Binary,
+                'o' => Integer.Base.Octal,
+                'd' => Integer.Base.Decimal,
+                'h' => Integer.Base.Hexadecimal,
                 _ => throw new Exception("Invalid Verilog number base")
             };
 
@@ -120,7 +120,7 @@ namespace SystemVerilog2017Interpreter.Parsers
 
 #warning Time literal is not implemented now
         public static Expression VisitTimeLiteral(ITerminalNode terminalNode)
-            => new NotImplemented().UpdateCodePosition(terminalNode);
+            => new NotImplemented("Time literal").UpdateCodePosition(terminalNode);
 
         public static Expression VisitRealNumber(Real_numberContext realNum)
         {
@@ -453,7 +453,7 @@ namespace SystemVerilog2017Interpreter.Parsers
                 string text = unbasedUnsigned.GetText();
                 return text.Length != 2
                     ? throw new Exception("Invalid unbased unsigned literal")
-                    : (Expression)new Integer(text[1..], BigInteger.Base.Decimal).UpdateCodePosition(context);
+                    : (Expression)new Integer(text[1..], Integer.Base.Decimal).UpdateCodePosition(context);
             }
 
             ITerminalNode stringLiteral = context.STRING_LITERAL();

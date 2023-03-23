@@ -215,13 +215,13 @@ namespace SystemVerilog2017Interpreter.Parsers
             if (opAssignContext != null)
             {
 #warning Operator assignment is not implemented now
-                return new NotImplemented().UpdateCodePosition(context);
+                return new NotImplemented("Operator assignment").UpdateCodePosition(context);
             }
 
             if (context.KW_TAGGED() != null)
             {
 #warning Tagged expression is not implemented now
-                return new NotImplemented().UpdateCodePosition(context);
+                return new NotImplemented("Tagged expression").UpdateCodePosition(context);
             }
 
             var attrInstanceContext = context.attribute_instance();
@@ -302,20 +302,20 @@ namespace SystemVerilog2017Interpreter.Parsers
             {
                 //   | expression KW_INSIDE LBRACE open_range_list RBRACE
 #warning Inside expression is not implemented now
-                return new NotImplemented().UpdateCodePosition(context);
+                return new NotImplemented("Inside expression").UpdateCodePosition(context);
             }
 
-            if (context.KW_MATCHES() != null)
+            if (context.KW_MATCHES().Any())
             {
 #warning Matches expression is not implemented now
-                return new NotImplemented().UpdateCodePosition(context);
+                return new NotImplemented("Matches expression").UpdateCodePosition(context);
             }
 
             if (context.TRIPLE_AND() != null)
             {
                 //   | expression ( KW_MATCHES pattern )? TRIPLE_AND expression ( KW_MATCHES pattern )?
 #warning Triple AND expression is not implemented now
-                return new NotImplemented().UpdateCodePosition(context);
+                return new NotImplemented("Triple AND expression").UpdateCodePosition(context);
             }
 
             if (expressionContext.Length != 3)

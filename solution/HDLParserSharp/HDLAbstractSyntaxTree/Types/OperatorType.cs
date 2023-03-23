@@ -105,5 +105,6 @@ namespace HDLAbstractSyntaxTree.Types
         DefineResolver,  // Used In Resolver Specification In VHDL Subtype Definition
         TypeOf,  // System Verilog Type Operator
         UnitSpec, // VHDL Unit Specification Eg. 10 Ns
+        MultiDimension, // Multi Dimension In SystemVerilog Ports
     }
 }

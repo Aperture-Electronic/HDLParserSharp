@@ -293,7 +293,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             if (constExprContext != null)
             {
 #warning Constant expression assignment pattern is not implemented now
-                return new NotImplemented().UpdateCodePosition(context);
+                return new NotImplemented("Constant expression assignment pattern").UpdateCodePosition(context);
             }
             
             if (keys.Any())
@@ -357,14 +357,14 @@ namespace SystemVerilog2017Interpreter.Parsers
             if (intTypeContext != null)
             {
 #warning Integer type of assignment pattern key is not implemented now
-                return new NotImplemented().UpdateCodePosition(context);
+                return new NotImplemented("Integer type of assignment pattern key").UpdateCodePosition(context);
             }
 
             var nonIntTypeContext = context.non_integer_type();
             if (nonIntTypeContext != null)
             {
 #warning Non-integer type of assignment pattern key is not implemented now
-                return new NotImplemented().UpdateCodePosition(context);
+                return new NotImplemented("Non-integer type of assignment pattern key").UpdateCodePosition(context);
             }
 
             var packageClassScopedContext = context.package_or_class_scoped_path();
@@ -401,7 +401,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         private Expression VisitPrimaryRandomize2(PrimaryRandomize2Context context)
         {
 #warning Randomize2 is not implemented now
-            return new NotImplemented().UpdateCodePosition(context);
+            return new NotImplemented("Randomize2").UpdateCodePosition(context);
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         private Expression VisitPrimaryRandomize(PrimaryRandomizeContext context)
         {
 #warning Randomize is not implemented now
-            return new NotImplemented().UpdateCodePosition(context);
+            return new NotImplemented("Randomize").UpdateCodePosition(context);
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         private Expression VisitPrimaryStreamingConcatenation(PrimaryStreaming_concatenationContext context)
         {
 #warning Primary streaming concatenation is not implemented now
-            return new NotImplemented().UpdateCodePosition(context);
+            return new NotImplemented("Primary streaming concatenation").UpdateCodePosition(context);
         }
 
         /// <summary>
@@ -530,7 +530,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         private Expression VisitPrimaryCast(PrimaryCastContext context)
         {
 #warning Primary cast is not implemented now
-            return new NotImplemented().UpdateCodePosition(context);
+            return new NotImplemented("Primary cast").UpdateCodePosition(context);
         }
     }
 }

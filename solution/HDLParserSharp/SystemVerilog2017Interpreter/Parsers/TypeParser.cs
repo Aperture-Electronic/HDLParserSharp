@@ -124,7 +124,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             }
 
             var intType = VisitIntegerType(intTypeContext);
-            // TODO: wire in correct format (parametrization <t, widt, sign>)
+            // TODO: wire in correct format (parametrization <t, width, sign>)
             var signingContext = context.signing();
 
             if (signingContext != null)
@@ -305,6 +305,16 @@ namespace SystemVerilog2017Interpreter.Parsers
 
         public Expression ApplyVariableDimension(Expression baseExpression, IEnumerable<Variable_dimensionContext> contexts)
         {
+            // This function in hdlConvertor has a bug
+            // that when we write a 2-D port like
+            // logic [msb:lsb] port_name [lsb2d:msb2d]
+            //       \-- 1D --/          \--- 2D ---/
+            // the expression of 2D dimension will overwrite on the 1D dimension
+            // on operands[1]
+            // We review the code, see the program write the dimension result fixedly on operands[1]
+            // And, the program add a empty operand to the parameterize operator
+            // So, we must concat the 1D dimension and 2D dimension with a new operator
+
             Operator? op = null;
             if (baseExpression is Operator paraOp)
             {
@@ -328,7 +338,25 @@ namespace SystemVerilog2017Interpreter.Parsers
                 {
                     Expression? dim = VisitVariableDimension(context);
                     dim ??= SymbolType.Null.AsNewSymbol();
-                    op.Operands[1] = dim;
+                    // Here is our enhancement.
+                    // When the operand is NULL, it means there is no dimension operand here
+                    // But if not, we need combine the operand and new dimension into a new operator
+                    if (op.Operands[1] is Symbol nullSymbol)
+                    {
+                        // First assign the dimension operand
+                        if (nullSymbol.Type == SymbolType.Null)
+                        {
+                            op.Operands[1] = dim;
+                        }
+                    }
+                    else
+                    {
+                        // Combine the new dimension operand
+                        Operator multiDimensionOperator = new Operator(OperatorType.MultiDimension,
+                            op.Operands[1], dim);
+                        op.Operands[1] = multiDimensionOperator;
+                    }
+                    
                     op = null;
                     continue;
                 }
@@ -338,6 +366,7 @@ namespace SystemVerilog2017Interpreter.Parsers
 
             return baseExpression;
         }
+
         public Expression? VisitPackedDimension(Packed_dimensionContext context)
         {
             var rangeExpression = context.range_expression();
