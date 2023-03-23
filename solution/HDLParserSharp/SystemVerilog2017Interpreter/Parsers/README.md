@@ -18,12 +18,13 @@ The re-wrote files/functions are list as follows
 | Event Expression Parser | OK |
 | Expression Parser | OK |
 | Expression Primary Parser | OK |
-| Generate Parser | **NO** (*Required statement parser*) |
+| Gate Parser | OK |
+| Generate Parser | OK |
 | Literal Parser | OK |
 | Module Instance Parser | OK |
 | Module Parser | OK |
 | Parameter Definition Parser | OK |
-| Port Parser | **NO** (Some methods are not implemented) |
+| Port Parser | OK |
 | Program Parser | OK |
 | Source Text Parser | OK |
 | Statement Parser | OK |
@@ -47,29 +48,39 @@ The features not implemented are list as follows
 |Attribute instance of named port connection|Module Instance|ModuleInstanceParser.cs||
 |Attribute instance of ordered port connection|Module Instance|ModuleInstanceParser.cs||
 |Bi-direction arrow|Literal|LiteralParser.cs||
-|Bind directive|Source|SourceTextParser.cs||
+|Bind directive|Source, Generate|SourceTextParser.cs, GenerateParser.cs||
 |Case statement inside|Statement|StatementParser.cs||
 |Charge strength|Module|ModuleParser.cs||
 |Checker declaration|Generate|GenerateParser.cs||
+|Class constructor declaration|Generate|GenreateParser.cs||
+|Class declaration|Generate|GenreateParser.cs||
 |Class scope name of task/function declaration|Program|ProgramParser.cs||
 |Clocking declaration|Generate|GenerateParser.cs||
 |Clocking drive statement|Statement|StatementParser.cs||
 |Clocking event|Expression(primary)|ExpressionPrimaryParser.cs||
 |Configuration declaration|Source|SourceTextParser.cs||
 |Constant expression assignment patternExpression(primary)|ExpressionPrimaryParser.cs||
+|Conversion of non-ANSI ports|Port|PortParser.cs||
 |Cover group declaration|Generate|GenerateParser.cs||
 |Cycle delay|Delay|DelayParser.cs||
+|Delay 2 sentence|Gate|GateParser.cs||
 |Delay 3 sentence|Module, Statement|ModuleParser.cs, StatementParser.cs||
 |Delay or event control|Expression, Statement|ExpressionParser.cs, StatementParser.cs||
+|Default clocking/disable construct|Generate|GenerateParser.cs||
 |Disable statement|Statement|StatementParser.cs||
-|Drive strength|Module, Statement|ModuleParser.cs, StatementParser.cs||
+|DPI import/export|Generate|GenerateParser.cs||
+|Drive strength|Module, Statement, Gate|ModuleParser.cs, StatementParser.cs, GateParser.cs||
 |Edge type identifier|EventExpression|EventExpressionParser.cs|Not fully implemented||
 |Event trigger statement|Statement|StatementParser.cs||
 |Expect property statement|Statement|StatementParser.cs||
+|Extern constraint declaration|Generate|GenerateParser.cs||
+|Gate type (expect output gate)|Gate|GateParser.cs||
+|Final construct|Generate|GenerateParser.cs||
 |Hierarchical name of task/function declaration|Program|ProgramParser.cs||
 |Inside expression|Expression|ExpressionParser.cs||
 |Integer type of assignment pattern key|Expression(primary)|ExpressionPrimaryParser.cs||
 |Interconnect type (declaration)|Module|ModuleParser.cs||
+|Interface/class declaration|Generate|GenerateParser.cs||
 |Interface declaration|Module, Source|Parser.cs, SourceTextParser.cs||
 |Let declaration|Generate, Statement|GenerateParser.cs, StatementParser.cs||
 |Mathces condition predicate|Expression|ExpressionParser.cs||
@@ -77,6 +88,8 @@ The features not implemented are list as follows
 |Mintypmax expression (type and max specified)|Expression|ExpressionParser.cs||
 |Module lifetime|Module|ModuleParser.cs||
 |Multiple event expression item|EventExpression|EventExpressionParser.cs||
+|Name of N output gate instance|Gate|GateParser.cs||
+|Net alias|Generate|GenerateParser.cs||
 |New class blocking assignment|Statement|StatementParser.cs||
 |New dynamic array of blocking assignment|Statement|StatementParser.cs||
 |Non-integer type of assignment pattern key|Expression(primary)|ExpressionPrimaryParser.cs||

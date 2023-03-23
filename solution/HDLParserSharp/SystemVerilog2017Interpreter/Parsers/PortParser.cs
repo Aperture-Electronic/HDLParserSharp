@@ -152,7 +152,46 @@ namespace SystemVerilog2017Interpreter.Parsers
             }
         }
 
-        internal void VisitTaskFunctionPortList(Tf_port_listContext portListContext, List<IdentifierDefinition> arguments) => throw new NotImplementedException();
+        /// <summary>
+        /// tf_port_list: tf_port_item ( COMMA tf_port_item )*;
+        /// </summary>
+        public void VisitTaskFunctionPort(Tf_port_listContext context, List<IdentifierDefinition> arguments)
+            => arguments.AddRange(context.tf_port_item().Select(i => VisitTaskFunctionPortItem(i)));
+
+        /// <summary>
+        /// tf_port_item:
+        ///     ( attribute_instance )* ( tf_port_direction )? ( KW_VAR )? ( data_type_or_implicit )?
+        ///     ( identifier ( variable_dimension )* ( ASSIGN expression )? )?;
+        /// </summary>
+        private IdentifierDefinition VisitTaskFunctionPortItem(Tf_port_itemContext context)
+        {
+            AttributeParser.VisitAttributeInstance(context.attribute_instance());
+            TypeParser typeParser = new TypeParser(this);
+            ExpressionParser expressionParser = new ExpressionParser(this);
+            
+            Direction direction = Direction.In;
+
+            var dataTypeImplicitContext = context.data_type_or_implicit();
+            var varDimensionContext = context.variable_dimension();
+
+            Expression dataType = typeParser.VisitDataTypeOrImplicit(dataTypeImplicitContext, null);
+            dataType = typeParser.ApplyVariableDimension(dataType, varDimensionContext);
+
+            var identifierContext = context.identifier();
+            string name = (identifierContext != null) ?
+                          ExpressionParser.GetIdentifierString(identifierContext) :
+                          string.Empty;
+
+            var valueContext = context.expression();
+            Expression? defaultValue = (valueContext != null) ?
+                                       expressionParser.VisitExpression(valueContext) :
+                                       null;
+
+            bool isLatched = context.KW_VAR() != null;
+
+            return new IdentifierDefinition(name, dataType, defaultValue, direction, isLatched)
+                .UpdateCodePosition(context);
+        }
 
         public IEnumerable<IdentifierDefinition> VisitPortDeclarations(List_of_port_declarationsContext context)
         {
@@ -326,16 +365,18 @@ namespace SystemVerilog2017Interpreter.Parsers
             }
         }
 
+        /// <summary>
+        /// list_of_variable_port_identifiers: list_of_tf_variable_identifiers;
+        /// </summary>
         public void VisitVariablePortIdentifiers(List_of_variable_port_identifiersContext context,
-            Expression bastType, bool isLatched, Direction direction, string document, List<IdentifierDefinition> identifiers)
-        {
-
-        }
+            Expression baseType, bool isLatched, Direction direction, string document, List<IdentifierDefinition> identifiers)
+            => VisitTaskFunctionVariableIdentifiers(context.list_of_tf_variable_identifiers(), 
+                baseType, isLatched, direction, document, identifiers);
 
         public void ConvertNonANSIPortsToANSI(Module_declarationContext context, List<IdentifierDefinition> identifiers,
             List<HDLObject> body)
         {
-            throw new NotImplementedException("Conversion of non-ANSI ports are not implemented");
+#warning Conversion of non-ANSI ports are not implemented
         }
 
         public void VisitVariableIdentifiers(List_of_variable_identifiersContext context, Expression baseType,

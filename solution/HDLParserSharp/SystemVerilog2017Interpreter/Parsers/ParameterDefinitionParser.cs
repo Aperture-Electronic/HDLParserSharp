@@ -1,5 +1,6 @@
 ﻿using HDLAbstractSyntaxTree.Definition;
 using HDLAbstractSyntaxTree.Elements;
+using HDLAbstractSyntaxTree.HDLElement;
 using HDLAbstractSyntaxTree.Types;
 using HDLAbstractSyntaxTree.Value;
 using HDLParserBase;
@@ -17,7 +18,7 @@ namespace SystemVerilog2017Interpreter.Parsers
     {
         public ParameterDefinitionParser(HDLParser other) : base(other) { }
 
-        internal void VisitParameterPortList(Parameter_port_listContext context, List<IdentifierDefinition> generics)
+        internal void VisitParameterPortList(Parameter_port_listContext context, List<HDLObject> generics)
         {
             // parameter_port_list:
             //     HASH LPAREN (
@@ -38,7 +39,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             }
         }
 
-        public void VisitParameterPortDeclaration(Parameter_port_declarationContext context, List<IdentifierDefinition> generics)
+        public void VisitParameterPortDeclaration(Parameter_port_declarationContext context, List<HDLObject> generics)
         {
             var typeAssignContext = context.list_of_type_assignments();
             if (typeAssignContext != null )
@@ -78,9 +79,9 @@ namespace SystemVerilog2017Interpreter.Parsers
             VisitTypedParameterAssignments(dataType, paramAssignContext, document, generics);
         }
 
-        public void VisitTypedParameterAssignments(Expression dataType, List_of_param_assignmentsContext context, string document, List<IdentifierDefinition> generics)
+        public void VisitTypedParameterAssignments(Expression dataType, List_of_param_assignmentsContext context, string document, List<HDLObject> generics)
         {
-            List<IdentifierDefinition> paramAssignments = new List<IdentifierDefinition>();
+            List<HDLObject> paramAssignments = new List<HDLObject>();
             VisitParameterAssignments(context, paramAssignments);
             bool first = true;
             foreach (IdentifierDefinition pAssign in paramAssignments)
@@ -100,7 +101,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             }
         }
 
-        public void VisitParameterAssignments(List_of_param_assignmentsContext context, List<IdentifierDefinition> generics)
+        public void VisitParameterAssignments(List_of_param_assignmentsContext context, List<HDLObject> generics)
             => generics.AddRange(from pAssign in context.param_assignment() 
                                  select VisitParameterAssignment(pAssign));
 
@@ -137,7 +138,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         /// list_of_type_assignments: type_assignment ( COMMA type_assignment )*;
 	    /// type_assignment: identifier ( ASSIGN data_type )?;
         /// </summary>
-        public void VisitTypeAssignments(List_of_type_assignmentsContext context, List<IdentifierDefinition> generics)
+        public void VisitTypeAssignments(List_of_type_assignmentsContext context, List<HDLObject> generics)
         {
             TypeParser typeParser = new TypeParser(this);
             foreach (var typeAssignContext in context.type_assignment())
@@ -186,7 +187,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         ///       | ( data_type_or_implicit )? list_of_param_assignments
         ///     );
         /// </summary>
-        public void VisitParameterDeclaration(Parameter_declarationContext context, List<IdentifierDefinition> generics)
+        public void VisitParameterDeclaration(Parameter_declarationContext context, List<HDLObject> generics)
         {
             var typeAssignContext = context.list_of_type_assignments();
             if (typeAssignContext != null)
@@ -215,7 +216,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         ///                   | ( data_type_or_implicit )? list_of_param_assignments
         ///                   );
         /// </summary>
-        public void VisitLocalParameterDeclaration(Local_parameter_declarationContext context, List<IdentifierDefinition> generics)
+        public void VisitLocalParameterDeclaration(Local_parameter_declarationContext context, List<HDLObject> generics)
         {
             int originalGenericsCount = generics.Count;
             if (context.KW_TYPE() != null)
@@ -244,7 +245,11 @@ namespace SystemVerilog2017Interpreter.Parsers
             {
                 for (int i = originalGenericsCount; i < newGenericsCount; i++)
                 {
-                    generics[i].IsConstant = true;
+                    HDLObject generic = generics[i];
+                    if (generic is IdentifierDefinition identifierDefinition)
+                    {
+                        identifierDefinition.IsConstant = true;
+                    }
                 }
             }
         }

@@ -3,11 +3,12 @@ using HDLAbstractSyntaxTree.HDLElement;
 using HDLAbstractSyntaxTree.Statement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SystemVerilog2017Interpreter.Extensions
 {
-    public static class IfStatementExtensions
+    internal static class StatementExtensions
     {
         public static void CollapseElseIf(this IfStatement ifStatement)
         {
@@ -39,9 +40,14 @@ namespace SystemVerilog2017Interpreter.Extensions
                 if (elseStatement.Document.Length > 0)
                 {
                     ifStatement.Document += (ifStatement.Document.Length > 0) ? "\n" : string.Empty;
-                    ifStatement.Document += elseStatement.Document;                                                
+                    ifStatement.Document += elseStatement.Document;
                 }
             }
         }
+
+        public static HDLObject PopBlockIfPossible(this BlockStatement blockStatement)
+            => (blockStatement.Statements.Count == 1) ?
+               blockStatement.Statements.First() :
+               blockStatement;
     }
 }

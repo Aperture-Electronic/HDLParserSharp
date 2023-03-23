@@ -131,7 +131,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             if (portListContext != null)
             {
                 PortParser portParser = new PortParser(this, nonANSIPortGroup);
-                portParser.VisitTaskFunctionPortList(portListContext, functionDefinition.Arguments);
+                portParser.VisitTaskFunctionPort(portListContext, functionDefinition.Arguments);
             }
             else
             {

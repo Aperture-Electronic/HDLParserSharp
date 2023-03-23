@@ -310,7 +310,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             throw new Exception("Expected any module item in context");
         }
 
-        public void VisitNetDeclaration(Net_declarationContext context, List<IdentifierDefinition> identifiers) 
+        public void VisitNetDeclaration(Net_declarationContext context, List<HDLObject> identifiers) 
         {
             // net_declaration:
             //  ( KW_INTERCONNECT ( implicit_data_type )? ( HASH delay_value )? identifier ( unpacked_dimension )* (
@@ -370,7 +370,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         /// Same as <see cref="VisitNetIdentifiers"/> but without the dimensions and with the default value
         /// </summary>
         private void VisitNetDeclarationAssignments(List_of_net_decl_assignmentsContext context, 
-            Expression baseType, bool isLatched, List<IdentifierDefinition> identifiers)
+            Expression baseType, bool isLatched, List<HDLObject> identifiers)
         {
             TypeParser typeParser = new TypeParser(this);
             bool first = true;

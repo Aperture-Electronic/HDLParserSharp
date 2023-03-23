@@ -1,5 +1,6 @@
 ﻿using HDLAbstractSyntaxTree.Elements;
 using HDLAbstractSyntaxTree.Expressions;
+using HDLAbstractSyntaxTree.HDLElement;
 using HDLAbstractSyntaxTree.Types;
 using HDLAbstractSyntaxTree.Value;
 using HDLParserBase;
@@ -22,7 +23,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         ///     hierarchical_instance ( COMMA hierarchical_instance )* SEMI;
         /// </summary>
         public void VisitAnyModuleInstantiation(Module_or_interface_or_program_or_udp_instantiationContext context,
-            List<ComponentInstance> instances)
+            List<HDLObject> instances)
         {
             var moduleNameContext = context.identifier();
             string moduleName = moduleNameContext.GetText();
