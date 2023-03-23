@@ -36,5 +36,16 @@ namespace SystemVerilog2017Interpreter.Extensions
                 }
             }
         }
+    
+        public static void TryAddRange<T, U>(this IList<T> list, IEnumerable<U> items)
+        {
+            foreach (U item in items)
+            {
+                if (item is T cvtTItem)
+                {
+                    list.Add(cvtTItem);
+                }
+            }
+        }
     }
 }

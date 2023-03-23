@@ -770,7 +770,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             var localParamDeclarationContext = context.local_parameter_declaration();
             if (localParamDeclarationContext != null)
             {
-                List<IdentifierDefinition> localParameters = new List<IdentifierDefinition>();
+                List<HDLObject> localParameters = new List<HDLObject>();
                 parameterDefinitionParser.VisitLocalParameterDeclaration(localParamDeclarationContext, localParameters);
                 objects.AddRange(localParameters);
                 return;
@@ -779,7 +779,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             var paramDeclarationContext = context.parameter_declaration();
             if (paramDeclarationContext != null)
             {
-                List<IdentifierDefinition> parameters = new List<IdentifierDefinition>();
+                List<HDLObject> parameters = new List<HDLObject>();
                 parameterDefinitionParser.VisitParameterDeclaration(paramDeclarationContext, parameters);
                 objects.AddRange(parameters);
                 return;

@@ -52,7 +52,9 @@ namespace SystemVerilog2017Interpreter.Parsers
             if (modulePortListContext != null)
             {
                 ParameterDefinitionParser parameterDefinitionParser = new ParameterDefinitionParser(this);
-                parameterDefinitionParser.VisitParameterPortList(modulePortListContext, moduleDec.Generics);
+                List<HDLObject> generics = new List<HDLObject>();
+                parameterDefinitionParser.VisitParameterPortList(modulePortListContext, generics);
+                moduleDec.Generics.TryAddRange(generics);
             }
         }
 
