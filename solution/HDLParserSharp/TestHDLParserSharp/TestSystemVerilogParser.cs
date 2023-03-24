@@ -4,7 +4,7 @@ using HDLAbstractSyntaxTree.Expressions;
 using HDLAbstractSyntaxTree.HDLElement;
 using HDLAbstractSyntaxTree.Types;
 using HDLAbstractSyntaxTree.Value;
-using HDLElaborateRoslyn;
+using HDLElaborateRoslyn.Elaborator;
 using HDLElaborateRoslyn.Expressions;
 using HDLParserSharp;
 
@@ -13,12 +13,7 @@ namespace TestHDLParserSharp
     [TestClass]
     public class TestSystemVerilogParser
     {
-        [TestMethod]
-        public void TestSimpleModule()
-        {
-            Console.WriteLine("Test simple System Verilog module parse");
-
-            string fileContent = @"
+        const string fileContent = @"
                 // System Verilog Source file
                 // Module: A
                 // Design for test
@@ -27,27 +22,39 @@ namespace TestHDLParserSharp
 
                 module A
                 #(
-                    parameter DATA_WIDTH = 20
+                    parameter DATA_WIDTH = 20,
+                    parameter ISSUE = 2
                 )
                 (
-                    output        logic [1:0] dout    
+                    input  logic                    clk,
+                    output logic [1:0]              dout,
+                    output logic [DATA_WIDTH - 1:0] dk    [((ISSUE > 1) ? (ISSUE - 1) : 0) : 0]
                 ); 
 
                 endmodule";
 
+        [TestMethod]
+        public void TestSimpleModule()
+        {
+            Console.WriteLine("Test simple System Verilog module parse");
+
             List<HDLObject> ast = new List<HDLObject>();
-            SystemVerilogParserContainer systemVerilogParser = new SystemVerilogParserContainer(ast, HDLLanguage.SystemVerilog);
+            HDLEvaluator evaluator = new HDLEvaluator();
+            SystemVerilogParserContainer systemVerilogParser = new SystemVerilogParserContainer(ast, HDLLanguage.SystemVerilog, evaluator.EvalToBool);
             systemVerilogParser.ParseString(fileContent, true);
 
-            Assert.IsTrue(ast[0] is ModuleDeclaration);
-            ModuleDeclaration moduleDefine = (ModuleDeclaration)ast.First();
-            var ports = moduleDefine.Ports;
+            Assert.IsTrue(ast[0] is ModuleDefinition);
+            ModuleDefinition moduleDefine = (ModuleDefinition)ast.First();
+            Assert.IsNotNull(moduleDefine.Entity);
+            ModuleDeclaration entity = moduleDefine.Entity;
+            var ports = entity.Ports;
             Assert.IsTrue(ports.Any());
 
             foreach (var port in ports)
             {
                 if (port is IdentifierDefinition identifier)
                 {
+                    Console.WriteLine($"Port {identifier.Name}");
                     Assert.IsNotNull(identifier.Type);
                     Assert.IsTrue(identifier.Type is Operator);
                     Operator type = (Operator)identifier.Type;
@@ -74,15 +81,8 @@ namespace TestHDLParserSharp
                             Expression msb = dimOp[0];
                             Expression lsb = dimOp[1];
 
-                            string msbString = ExpressionToSharp.ToSharp(msb);
-                            string lsbString = ExpressionToSharp.ToSharp(lsb);
-
-                            Console.WriteLine($"MSB: {msbString}");
-                            Console.WriteLine($"LSB: {lsbString}");
-
-                            HDLElaborator elaborator = new HDLElaborator();
-                            int msbBit = elaborator.EvalToInteger(msbString);
-                            int lsbBit = elaborator.EvalToInteger(lsbString); 
+                            int msbBit = evaluator.EvalToInteger(msb);
+                            int lsbBit = evaluator.EvalToInteger(lsb); 
 
                             Console.WriteLine($"MSB: {msbBit}");
                             Console.WriteLine($"LSB: {lsbBit}");
@@ -90,6 +90,43 @@ namespace TestHDLParserSharp
                     }
                 }
             }
+        }
+
+        [TestMethod]
+        public void TestElaborateModule()
+        {
+            
+
+            List<HDLObject> ast = new List<HDLObject>();
+            HDLEvaluator evaluator = new HDLEvaluator();
+            SystemVerilogParserContainer systemVerilogParser = new SystemVerilogParserContainer(ast, HDLLanguage.SystemVerilog, evaluator.EvalToBool);
+            // systemVerilogParser.ParseString(fileContent, true);
+            systemVerilogParser.ParseFile("D:\\Project\\IPCores\\Data\\stacked_fifo_v3\\sfifo_rob.sv", true);
+            HDLElaborator elaborator = new HDLElaborator(ast);
+
+            elaborator.ElaborateModules();
+            elaborator.GenerateModuleGenericsList();
+            elaborator.ElaborateModuleGenerics();
+
+            Console.WriteLine("Elaborated module");
+            foreach (var module in elaborator.Modules)
+            {
+                Console.WriteLine($"Module {module.Name} has");
+                var generics = module.ElaboratedModuleGenerics;
+                Console.WriteLine("Generics:");
+                foreach (var generic in generics)
+                {
+                    Console.WriteLine($"{generic.Name,20}: {generic.DefaultValue,10} ({generic.DefaultValueType})");
+                }
+                elaborator.ElaborateModulePort();
+
+                Console.WriteLine("Ports:");
+                foreach (var port in module.ElaboratedModulePorts)
+                {
+                    Console.WriteLine($"{port.Name,20}: {port.Size}");
+                }
+            }
+            
         }
     }
 }

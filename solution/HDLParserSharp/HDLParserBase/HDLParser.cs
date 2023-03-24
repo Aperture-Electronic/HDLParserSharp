@@ -7,9 +7,9 @@ namespace HDLParserBase
 {
     public abstract class HDLParser
     {
-        private BaseCommentParser? commentParser;
+        private HDLCommentParser? commentParser;
 
-        public BaseCommentParser CommentParser
+        public HDLCommentParser CommentParser
         {
             get
             {
@@ -38,7 +38,7 @@ namespace HDLParserBase
             commentParser = null;
         }
 
-        public HDLParser(BaseCommentParser commentParser, bool hierarchyOnly)
+        public HDLParser(HDLCommentParser commentParser, bool hierarchyOnly)
         {
             Tokens = null;
             HDLContext = null;

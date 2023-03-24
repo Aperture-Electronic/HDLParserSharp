@@ -7,7 +7,7 @@ using SystemVerilog2017;
 
 namespace SystemVerilog2017Interpreter.Parsers
 {
-    public class CommentParser : BaseCommentParser
+    public class CommentParser : HDLCommentParser
     {
         private readonly CommonTokenStream tokens;
 

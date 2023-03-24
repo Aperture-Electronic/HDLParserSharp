@@ -34,7 +34,7 @@ namespace SystemVerilog2017Interpreter.Extensions
             return position;
         }
 
-        public static T UpdateDocument<T> (this T document, ParserRuleContext context, BaseCommentParser parser) 
+        public static T UpdateDocument<T> (this T document, ParserRuleContext context, HDLCommentParser parser) 
             where T : IDocumented
         {
             if ((context != null) && (parser != null))

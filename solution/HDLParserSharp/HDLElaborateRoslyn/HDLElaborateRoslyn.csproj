@@ -12,10 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HDLAbstractSyntaxTree\HDLAbstractSyntaxTree.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\HDLParserBase\HDLParserBase.csproj" />
+    <ProjectReference Include="..\HDLParserSharp\HDLParserSharp.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Text;
@@ -48,6 +49,8 @@ namespace HDLElaborateRoslyn.RoslynDynamic
             throw new Exception($"Can not found the identifier \"{identifier}\" in the set");
         }
 
+        public void ClearIdentifiers() => items.Clear();
+
         public override bool TryGetMember(GetMemberBinder binder, out object? result)
         {
             if (items.ContainsKey(binder.Name))
@@ -60,8 +63,13 @@ namespace HDLElaborateRoslyn.RoslynDynamic
             return false;
         }
 
-        public override bool TrySetMember(SetMemberBinder binder, object value)
+        public override bool TrySetMember(SetMemberBinder binder, object? value)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException("The value set to identifier can not be null");
+            }
+
             if (items.ContainsKey(binder.Name))
             {
                 (Type type, object _) = items[binder.Name];

@@ -16,19 +16,12 @@ using SystemVerilog2017Interpreter.Parsers;
 
 namespace SystemVerilog2017Interpreter.Macro
 {
-    public class CodeMacroPreprocessor
+    public class CodeMacroPreprocessor : HDLMacroPreprocessor
     {
-        public string ContextFilePath { get; set; }
-
-        public List<HDLMacro> MacroContext { get; }
-
-        public Func<Expression, bool> MacroIfParser { get; }
-
         public CodeMacroPreprocessor(Func<Expression, bool> macroIfParser, string path = ".")
+            : base(macroIfParser, path)
         {
-            ContextFilePath = path;
-            MacroContext = new List<HDLMacro>();
-            MacroIfParser = macroIfParser;
+
         }
 
         private static string GenerateIfVerilogModule(string expression)
@@ -63,7 +56,7 @@ namespace SystemVerilog2017Interpreter.Macro
             return MacroIfParser(expr);
         }
 
-        public string VisitMacro(string code)
+        public override string VisitMacro(string code)
         {
             // Macros
             // `define:  Define a new macro, with or without value
@@ -127,6 +120,11 @@ namespace SystemVerilog2017Interpreter.Macro
                             
                         }
 
+                        continue;
+                    }
+                    else
+                    {
+                        i++;
                         continue;
                     }
                 }

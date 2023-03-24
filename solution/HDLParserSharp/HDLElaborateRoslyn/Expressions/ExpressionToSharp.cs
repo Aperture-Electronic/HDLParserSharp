@@ -12,7 +12,7 @@ using HDLElaborateRoslyn.HDLLibrary;
 
 namespace HDLElaborateRoslyn.Expressions
 {
-    public class ExpressionToSharp
+    public static class ExpressionToSharp
     {
         private static string IdentifierToSharp(Identifier identifier)
             => $"Global.hdl_id_{identifier}";

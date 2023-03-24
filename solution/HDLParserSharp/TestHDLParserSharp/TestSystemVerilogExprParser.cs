@@ -5,6 +5,7 @@ using HDLAbstractSyntaxTree.HDLElement;
 using HDLAbstractSyntaxTree.Types;
 using HDLAbstractSyntaxTree.Value;
 using HDLElaborateRoslyn;
+using HDLElaborateRoslyn.Elaborator;
 using HDLElaborateRoslyn.Expressions;
 using HDLParserSharp;
 
@@ -21,7 +22,8 @@ namespace TestHDLParserSharp
             string fileContent = @"module X(); assign B = A > 0; endmodule";
 
             List<HDLObject> ast = new List<HDLObject>();
-            SystemVerilogParserContainer systemVerilogParser = new SystemVerilogParserContainer(ast, HDLLanguage.SystemVerilog);
+            HDLEvaluator evaluator = new HDLEvaluator();
+            SystemVerilogParserContainer systemVerilogParser = new SystemVerilogParserContainer(ast, HDLLanguage.SystemVerilog, evaluator.EvalToBool);
             systemVerilogParser.ParseString(fileContent, true);
            
         }

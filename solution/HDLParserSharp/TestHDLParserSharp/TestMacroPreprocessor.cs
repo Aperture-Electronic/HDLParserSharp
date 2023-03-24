@@ -1,5 +1,5 @@
 ﻿using HDLAbstractSyntaxTree.Elements;
-using HDLElaborateRoslyn;
+using HDLElaborateRoslyn.Elaborator;
 using HDLElaborateRoslyn.Expressions;
 using HDLParserBase;
 using System;
@@ -36,15 +36,9 @@ namespace TestHDLParserSharp
                 endmodule
                 `endif";
 
-            HDLElaborator elaborator = new HDLElaborator();
+            HDLEvaluator evaluator = new HDLEvaluator();
             CodeMacroPreprocessor macroPreprocessor
-                = new CodeMacroPreprocessor(delegate (Expression e)
-                {
-                    string csharpCode = ExpressionToSharp.ToSharp(e);
-                    Console.WriteLine(csharpCode);
-
-                    return elaborator.EvalToBool(csharpCode);
-                });
+                = new CodeMacroPreprocessor(evaluator.EvalToBool);
 
             string newFile = macroPreprocessor.VisitMacro(fileContent);
             Console.WriteLine(newFile);
