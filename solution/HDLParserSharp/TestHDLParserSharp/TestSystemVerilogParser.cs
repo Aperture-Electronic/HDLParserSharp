@@ -23,12 +23,12 @@ namespace TestHDLParserSharp
                 module A
                 #(
                     parameter DATA_WIDTH = 20,
-                    parameter ISSUE = 2
+                    parameter ISSUE = 128'hFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF
                 )
                 (
                     input  logic                    clk,
                     output logic [1:0]              dout,
-                    output logic [DATA_WIDTH - 1:0] dk    [((ISSUE > 1) ? (ISSUE - 1) : 0) : 0]
+                    output logic [DATA_WIDTH - 1:0] dk    [((ISSUE > 1) ? (DATA_WIDTH - 1) : 0) : 0]
                 ); 
 
                 endmodule";
@@ -100,8 +100,8 @@ namespace TestHDLParserSharp
             List<HDLObject> ast = new List<HDLObject>();
             HDLEvaluator evaluator = new HDLEvaluator();
             SystemVerilogParserContainer systemVerilogParser = new SystemVerilogParserContainer(ast, HDLLanguage.SystemVerilog, evaluator.EvalToBool);
-            // systemVerilogParser.ParseString(fileContent, true);
-            systemVerilogParser.ParseFile("D:\\Project\\IPCores\\Data\\stacked_fifo_v3\\sfifo_rob.sv", true);
+            systemVerilogParser.ParseString(fileContent, true);
+            //systemVerilogParser.ParseFile("D:\\Project\\IPCores\\Data\\stacked_fifo_v3\\sfifo_rob.sv", true);
             HDLElaborator elaborator = new HDLElaborator(ast);
 
             elaborator.ElaborateModules();

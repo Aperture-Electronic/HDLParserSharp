@@ -24,7 +24,26 @@ namespace HDLElaborateRoslyn.Expressions
             => $"\"{str.Content}\"";
 
         private static string IntegerToSharp(Integer integer)
-            => $"new HDLInteger({integer.Value}, {integer.Bits})";
+        {
+            if (integer.Bits > 64)
+            {
+                BigInteger value = integer.Value;
+                BigInteger mask = ulong.MaxValue;
+                List<string> param = new List<string>();
+                do
+                {
+                    param.Add($"{(ulong)(value & mask)}");
+                    value >>= 64;
+                } while (value > 0);
+
+                return $"new HDLInteger({integer.Bits}, {string.Join(',', param)})";
+            }
+            else
+            {
+                return $"new HDLInteger({integer.Bits}, {integer.Value})";
+            }
+        }
+            
 
         private static string OperatorToSharp(Operator op)
         {
@@ -94,6 +113,8 @@ namespace HDLElaborateRoslyn.Expressions
                 Operator op => OperatorToSharp(op),
                 Identifier identifier => IdentifierToSharp(identifier),
                 Integer integer => IntegerToSharp(integer),
+                Real real => RealToSharp(real),
+                HDLAbstractSyntaxTree.Value.String str => StringToSharp(str),
                 _ => string.Empty
             };
         }

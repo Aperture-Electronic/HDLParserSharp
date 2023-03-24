@@ -13,10 +13,25 @@ namespace HDLElaborateRoslyn.HDLLibrary
 
         public int Bits;
 
-        public HDLInteger(BigInteger value, int bits)
+        public HDLInteger(int bits, BigInteger value)
         {
             Value = value;
             Bits = bits;
+        }
+
+        public HDLInteger(int bits, params ulong[] values)
+        {
+            int length = values.Length;
+            BigInteger value = values[0];
+
+            for (int i = 1; i < length; i++)
+            {
+                value <<= 64;
+                value |= new BigInteger(values[i]);
+            }
+
+            Bits = bits;
+            Value = value;
         }
 
         public HDLInteger(BigInteger value)
@@ -27,7 +42,7 @@ namespace HDLElaborateRoslyn.HDLLibrary
 
         public override string ToString() => $"{Value}({Bits})";
 
-        public static HDLInteger Zero1Bit => new HDLInteger(0, 1);
+        public static HDLInteger Zero1Bit => new HDLInteger(1, 0);
         public static HDLInteger One1Bit => new HDLInteger(1, 1);
 
         public static bool operator ==(HDLInteger op1, HDLInteger op2)
@@ -103,10 +118,10 @@ namespace HDLElaborateRoslyn.HDLLibrary
                 : throw new Exception($"The bit count of this HDLInteger({op.Bits}) is over the maximum bit count of int(32)");
 
         public static implicit operator HDLInteger(int op)
-            => new HDLInteger(op, 32);
+            => new HDLInteger(32, op);
 
         public static implicit operator HDLInteger(long op)
-            => new HDLInteger(op, 64);
+            => new HDLInteger(64, op);
 
         public static implicit operator HDLInteger(bool op)
             => op ? One1Bit : Zero1Bit;
@@ -220,7 +235,7 @@ namespace HDLElaborateRoslyn.HDLLibrary
             int totalBits = left.Bits + right.Bits;
             int leftShiftBits = right.Bits;
 
-            return new HDLInteger((left.Value << leftShiftBits) | right.Value, totalBits);
+            return new HDLInteger(totalBits, (left.Value << leftShiftBits) | right.Value);
         }
 
         public static HDLInteger ReplConcat(int count, HDLInteger op)
