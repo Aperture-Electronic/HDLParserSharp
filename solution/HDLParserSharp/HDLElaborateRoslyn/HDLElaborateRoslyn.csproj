@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net7</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -12,6 +12,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HDLAbstractSyntaxTree\HDLAbstractSyntaxTree.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

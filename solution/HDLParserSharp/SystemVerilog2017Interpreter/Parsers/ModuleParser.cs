@@ -61,16 +61,16 @@ namespace SystemVerilog2017Interpreter.Parsers
         public void VisitModuleDeclaration(Module_declarationContext context, List<HDLObject> moduleObjects)
         {
             var headerCommonContext = context.module_header_common();
-            ModuleDeclaration architecture = new ModuleDeclaration().UpdateCodePosition(context);
-            ModuleContext moduleContext = new ModuleContext(architecture);
-            VisitModuleHeaderCommon(headerCommonContext, architecture);
+            ModuleDeclaration entity = new ModuleDeclaration().UpdateCodePosition(context);
+            ModuleContext moduleContext = new ModuleContext(entity);
+            VisitModuleHeaderCommon(headerCommonContext, entity);
 
             var portListDeclarationContext = context.list_of_port_declarations();
             if (portListDeclarationContext != null)
             {
                 PortParser portParser = new PortParser(this, moduleContext.NonANSIPortGroups);
                 var ports = portParser.VisitPortDeclarations(portListDeclarationContext);
-                architecture.Ports.AddRange(ports);
+                entity.Ports.AddRange(ports);
             }
             else
             {
@@ -79,30 +79,30 @@ namespace SystemVerilog2017Interpreter.Parsers
                     // All port auto connection in System Verilog (.*)
                     IdentifierDefinition allPortIdentifier = new IdentifierDefinition(".*", SymbolType.All.AsNewSymbol(), null)
                         .UpdateCodePosition(context);
-                    architecture.Ports.Add(allPortIdentifier);
+                    entity.Ports.Add(allPortIdentifier);
                 }
             }
 
             // External definition
             if (context.KW_EXTERN() != null)
             {
-                foreach (var generic in architecture.Generics)
+                foreach (var generic in entity.Generics)
                 {
                     generic.Type ??= SymbolType.Auto.AsNewSymbol();
                 }
 
-                foreach (var port in architecture.Ports)
+                foreach (var port in entity.Ports)
                 {
                     port.Type ??= SymbolType.Auto.AsNewSymbol();
                 }
 
-                moduleObjects.Add(architecture);
+                moduleObjects.Add(entity);
                 return;
             }
 
             // Generate the AST for module definition
-            ModuleDefinition entity = new ModuleDefinition();
-            moduleContext.Architecture = entity;
+            ModuleDefinition architecture = new ModuleDefinition();
+            moduleContext.Architecture = architecture;
             var timeUnitsDeclarationContext = context.timeunits_declaration();
             if (timeUnitsDeclarationContext != null)
             {
@@ -111,11 +111,11 @@ namespace SystemVerilog2017Interpreter.Parsers
 
             foreach (var moduleItemContext in context.module_item())
             {
-                VisitModuleItem(moduleItemContext, entity.Objects, moduleContext);
+                VisitModuleItem(moduleItemContext, architecture.Objects, moduleContext);
             }
 
-            entity.ModuleName = new Identifier(moduleContext.Entity.Name).UpdateCodePosition(context);
-            entity.Entity = architecture;
+            architecture.ModuleName = new Identifier(moduleContext.Entity.Name).UpdateCodePosition(context);
+            architecture.Entity = entity;
 
             // Process any non-ANSI ports
             if (moduleContext.NonANSIPortGroups.Any())
@@ -180,6 +180,8 @@ namespace SystemVerilog2017Interpreter.Parsers
             {
                 GenerateParser generateParser = new GenerateParser(this);
                 generateParser.VisitModuleOrGenerateItem(moduleGenerateItemContext, objects, parameters);
+
+                return;
             }
 
             var specparamDeclarationContext = context.specparam_declaration();

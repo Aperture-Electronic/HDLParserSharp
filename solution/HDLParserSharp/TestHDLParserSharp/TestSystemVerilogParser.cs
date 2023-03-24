@@ -5,6 +5,7 @@ using HDLAbstractSyntaxTree.HDLElement;
 using HDLAbstractSyntaxTree.Types;
 using HDLAbstractSyntaxTree.Value;
 using HDLElaborateRoslyn;
+using HDLElaborateRoslyn.Expressions;
 using HDLParserSharp;
 
 namespace TestHDLParserSharp
@@ -22,14 +23,14 @@ namespace TestHDLParserSharp
                 // Module: A
                 // Design for test
 
+                `define MACRO_TEST
+
                 module A
                 #(
                     parameter DATA_WIDTH = 20
                 )
                 (
-                    // input         logic                                clk, 
-                    // output        logic [1:0]                          dout    [0:(DATA_WIDTH > 1 ? (DATA_WIDTH - 1) : 0)]
-                    output logic signed [((DATA_WIDTH > 1) ? 1 : 0):0] dout_c
+                    output        logic [1:0] dout    
                 ); 
 
                 endmodule";
@@ -54,7 +55,8 @@ namespace TestHDLParserSharp
                     Assert.IsNotNull(dim);
                     if (dim is Symbol nullSymbol)
                     {
-                        // 1
+                        // Single bit
+                        Console.WriteLine("The port is single bit");
                     }
                     else 
                     {
@@ -72,8 +74,8 @@ namespace TestHDLParserSharp
                             Expression msb = dimOp[0];
                             Expression lsb = dimOp[1];
 
-                            string msbString = HDLElaborateRoslyn.ExpressionToSharp.ToSharp(msb);
-                            string lsbString = HDLElaborateRoslyn.ExpressionToSharp.ToSharp(lsb);
+                            string msbString = ExpressionToSharp.ToSharp(msb);
+                            string lsbString = ExpressionToSharp.ToSharp(lsb);
 
                             Console.WriteLine($"MSB: {msbString}");
                             Console.WriteLine($"LSB: {lsbString}");
@@ -84,11 +86,6 @@ namespace TestHDLParserSharp
 
                             Console.WriteLine($"MSB: {msbBit}");
                             Console.WriteLine($"LSB: {lsbBit}");
-                        }
-                        else
-                        {
-                            // Single bit
-                            Console.WriteLine("The port is single bit");
                         }
                     }
                 }

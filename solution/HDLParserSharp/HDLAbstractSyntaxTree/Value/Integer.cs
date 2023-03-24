@@ -99,7 +99,7 @@ namespace HDLAbstractSyntaxTree.Value
             int stringLength = noPrefixZero.Length;
             BigInteger integer = BigInteger.Zero;
 
-            for (int i = stringLength - 1; i >= 0; i--)
+            for (int i = 0; i < stringLength; i++)
             {
                 integer *= baseWeight;
 

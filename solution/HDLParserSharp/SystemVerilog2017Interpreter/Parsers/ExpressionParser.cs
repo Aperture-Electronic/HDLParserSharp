@@ -354,8 +354,8 @@ namespace SystemVerilog2017Interpreter.Parsers
 
             
             var expressionContext = context.expression();
-            IEnumerable<(ExpressionContext exprContext, Expression expr)> expressions = 
-                expressionContext.Select(e => (e, VisitExpression(e)));
+            List<(ExpressionContext exprContext, Expression expr)> expressions = 
+                expressionContext.Select(e => (e, VisitExpression(e))).ToList();
 
             Expression result = expressions.First().expr;
             foreach ((ExpressionContext exprContext, Expression expr) in expressions)
