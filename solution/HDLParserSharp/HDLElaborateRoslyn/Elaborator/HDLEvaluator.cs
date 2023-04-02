@@ -53,6 +53,8 @@ namespace HDLElaborateRoslyn.Elaborator
                 Console.WriteLine($"Exception when evaluate{ex.Message}");
             }
 
+            ClearEvaluationSpace();
+
             return result is bool boolResult && boolResult;
         }
 
@@ -70,6 +72,8 @@ namespace HDLElaborateRoslyn.Elaborator
                 Console.WriteLine(ex.Message);
             }
 
+            ClearEvaluationSpace();
+
             return result is HDLInteger intResult ? intResult : 0;
         }
 
@@ -86,6 +90,8 @@ namespace HDLElaborateRoslyn.Elaborator
                 Console.WriteLine("Exception when evaluate");
                 Console.WriteLine(ex.Message);
             }
+
+            ClearEvaluationSpace();
 
             return result;
         }

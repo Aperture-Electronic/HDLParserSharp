@@ -127,6 +127,7 @@ namespace TestHDLParserSharp
                 }
             }
             
+            HDLEvaluator.ClearEvaluationSpace();
         }
     }
 }
