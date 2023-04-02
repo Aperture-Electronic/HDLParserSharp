@@ -101,7 +101,7 @@ namespace TestHDLParserSharp
             HDLEvaluator evaluator = new HDLEvaluator();
             SystemVerilogParserContainer systemVerilogParser = new SystemVerilogParserContainer(ast, HDLLanguage.SystemVerilog, evaluator.EvalToBool);
             // systemVerilogParser.ParseString(fileContent, true);
-            systemVerilogParser.ParseFile("D:/Project/IPCores/Data/SerialDataRepeater/src/sfr.sv", true);
+            systemVerilogParser.ParseFile("D:/Project/IPCores/Data/SerialDataRepeater/src/data_buffer.sv", true);
             HDLElaborator elaborator = new HDLElaborator(ast);
 
             elaborator.ElaborateModules();

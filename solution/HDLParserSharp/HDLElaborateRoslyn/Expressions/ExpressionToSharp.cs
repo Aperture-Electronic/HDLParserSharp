@@ -14,8 +14,20 @@ namespace HDLElaborateRoslyn.Expressions
 {
     public static class ExpressionToSharp
     {
+        private const string IdentifierPrefix = "Global.hdl_id_";
+
+        private static string SharpToIdentifier(string identifier)
+        {
+            if (identifier.StartsWith(IdentifierPrefix))
+            {
+                return identifier.Substring(IdentifierPrefix.Length);   
+            }
+
+            return identifier;
+        }
+
         private static string IdentifierToSharp(Identifier identifier)
-            => $"Global.hdl_id_{identifier}";
+            => $"{IdentifierPrefix}{identifier}";
 
         private static string RealToSharp(Real real)
             => $"{real.Value}";
@@ -43,7 +55,29 @@ namespace HDLElaborateRoslyn.Expressions
                 return $"new HDLInteger({integer.Bits}, {integer.Value})";
             }
         }
-            
+
+        private static string ConvertCall(string[] x)
+        {
+            // Get the function name and arguments
+            string functionName = SharpToIdentifier(x[0]);
+            string[] arguments = x[1..];
+
+            if (functionName.StartsWith('$'))
+            {
+                // System function
+                return ConvertSystemCall(functionName[1..], arguments);
+            }
+
+            // TODO: other functions
+            return string.Empty;
+        }
+
+        private static string ConvertSystemCall(string function, string[] x)
+            => function switch
+            {
+                "clog2" => $"ArithmeticMath.CeilingLog2({string.Join(',', x)})",
+                _ => string.Empty
+            };
 
         private static string OperatorToSharp(Operator op)
         {
@@ -96,12 +130,13 @@ namespace HDLElaborateRoslyn.Expressions
                 OperatorType.Lt => $"({x[0]}) < ({x[1]})",
                 OperatorType.Le => $"({x[0]}) <= ({x[1]})",
                 OperatorType.Ge => $"({x[0]}) >= ({x[1]})",
-                OperatorType.Index => $"BitLogic.Index(({x[0]}), ({x[1]}))", 
+                OperatorType.Index => $"BitLogic.Index(({x[0]}), ({x[1]}))",
                 OperatorType.Concat => $"BitLogic.Concat(({x[0]}), ({x[1]}))",
                 OperatorType.ReplConcat => $"BitLogic.ReplConcat(({x[0]}), ({x[1]}))",
                 OperatorType.PartSelectPost => $"new PartSelect(({x[0]}), ({x[1]}), true)",
                 OperatorType.PartSelectPre => $"new PartSelect(({x[0]}), ({x[1]}), false)",
                 OperatorType.Downto => $"new DownTo(({x[0]}), ({x[1]}))",
+                OperatorType.Call => ConvertCall(x),
                 _ => ""
             };
         }
