@@ -100,8 +100,8 @@ namespace TestHDLParserSharp
             List<HDLObject> ast = new List<HDLObject>();
             HDLEvaluator evaluator = new HDLEvaluator();
             SystemVerilogParserContainer systemVerilogParser = new SystemVerilogParserContainer(ast, HDLLanguage.SystemVerilog, evaluator.EvalToBool);
-            systemVerilogParser.ParseString(fileContent, true);
-            //systemVerilogParser.ParseFile("D:\\Project\\IPCores\\Data\\stacked_fifo_v3\\sfifo_rob.sv", true);
+            // systemVerilogParser.ParseString(fileContent, true);
+            systemVerilogParser.ParseFile("D:/Project/IPCores/Data/SerialDataRepeater/src/sfr.sv", true);
             HDLElaborator elaborator = new HDLElaborator(ast);
 
             elaborator.ElaborateModules();

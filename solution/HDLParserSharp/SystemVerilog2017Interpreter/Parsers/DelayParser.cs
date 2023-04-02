@@ -49,6 +49,7 @@ namespace SystemVerilog2017Interpreter.Parsers
                 {
                     yield return expression;
                 }
+                yield break;
             }
 
             throw new Exception("Excepted event control statement");
