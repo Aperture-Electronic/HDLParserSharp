@@ -3,6 +3,7 @@ using HDLAbstractSyntaxTree.Common;
 using HDLAbstractSyntaxTree.Elements;
 using HDLAbstractSyntaxTree.HDLElement;
 using HDLAbstractSyntaxTree.Types;
+using HDLAbstractSyntaxTree.Value;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,7 @@ namespace HDLAbstractSyntaxTree.Definition
     /// <summary>
     /// A HDL object defined an identifier
     /// </summary>
-    public class IdentifierDefinition : HDLCodedObject
+    public class IdentifierDefinition : HDLCodedObject, IAttributed
     {
         public Expression? Type { get; set; }
 
@@ -24,6 +25,8 @@ namespace HDLAbstractSyntaxTree.Definition
         public bool IsShared { get; set; }
 
         public Direction Direction { get; set; }
+
+        public Dictionary<Identifier, Expression> Attributes { get; } = new Dictionary<Identifier, Expression>();
 
         public IdentifierDefinition(string identifier, Expression? type, Expression? value, Direction direction, bool isLatched)
         {

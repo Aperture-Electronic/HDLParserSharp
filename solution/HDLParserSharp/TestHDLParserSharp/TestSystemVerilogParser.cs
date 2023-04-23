@@ -26,6 +26,9 @@ namespace TestHDLParserSharp
                     parameter ISSUE = 128'hFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF
                 )
                 (
+                    (* ifname = ""clock"" *)
+                    (* iftype = ""slave"" *)
+                    (* bind_port = ""clk"" *)
                     input  logic                    clk,
                     output logic [1:0]              dout,
                     output logic [DATA_WIDTH - 1:0] dk    [((ISSUE > 1) ? (DATA_WIDTH - 1) : 0) : 0]

@@ -33,7 +33,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             // module_header_common:
             //   ( attribute_instance )* module_keyword ( lifetime )? identifier
             //   ( package_import_declaration )* ( parameter_port_list )?;
-            AttributeParser.VisitAttributeInstance(context.attribute_instance());
+            new AttributeParser(this).VisitAttributeInstance(context.attribute_instance());
 
             var lifeTimeContext = context.lifetime();
             if (lifeTimeContext != null)
@@ -219,7 +219,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             if (moduleItemItemContext != null)
             {
                 var attributeInstanceContext = context.attribute_instance();
-                AttributeParser.VisitAttributeInstance(attributeInstanceContext);
+                new AttributeParser(this).VisitAttributeInstance(attributeInstanceContext);
                 int previousSize = objects.Count;
                 VisitModuleItemItem(moduleItemItemContext, objects, moduleContext.Entity.Generics);
 

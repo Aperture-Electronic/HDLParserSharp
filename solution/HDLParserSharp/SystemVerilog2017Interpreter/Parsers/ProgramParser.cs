@@ -78,7 +78,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         /// </summary>
         private void VisitTaskFunctionPortDeclaration(Tf_port_declarationContext context, List<IdentifierDefinition> ports)
         {
-            AttributeParser.VisitAttributeInstance(context.attribute_instance());
+            new AttributeParser(this).VisitAttributeInstance(context.attribute_instance());
             var tfPortDirectionContext = context.tf_port_direction();
 
             Dictionary<string, IdentifierDefinition> nonANSIPortGroups = new Dictionary<string, IdentifierDefinition>();

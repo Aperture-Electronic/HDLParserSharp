@@ -291,7 +291,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         public HDLStatement VisitStatement(StatementContext context)
         {
             var attrInstanceContext = context.attribute_instance();
-            AttributeParser.VisitAttributeInstance(attrInstanceContext);
+            new AttributeParser(this).VisitAttributeInstance(attrInstanceContext);
 
             var statementItemContext = context.statement_item();
             HDLStatement statement = VisitStatementItem(statementItemContext);
@@ -756,7 +756,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         /// </summary>
         public void VisitBlockItemDeclaration(Block_item_declarationContext context, List<HDLObject> objects)
         {
-            AttributeParser.VisitAttributeInstance(context.attribute_instance());
+            new AttributeParser(this).VisitAttributeInstance(context.attribute_instance());
 
             var dataDeclarationContext = context.data_declaration();
             if (dataDeclarationContext != null)
@@ -891,7 +891,7 @@ namespace SystemVerilog2017Interpreter.Parsers
                 return VisitStatement(statementContext);
             }
 
-            AttributeParser.VisitAttributeInstance(context.attribute_instance());
+            new AttributeParser(this).VisitAttributeInstance(context.attribute_instance());
             return new NopStatement().UpdateCodePosition(context);
         }
 

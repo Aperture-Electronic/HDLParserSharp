@@ -165,7 +165,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         /// </summary>
         private IdentifierDefinition VisitTaskFunctionPortItem(Tf_port_itemContext context)
         {
-            AttributeParser.VisitAttributeInstance(context.attribute_instance());
+            new AttributeParser(this).VisitAttributeInstance(context.attribute_instance());
             TypeParser typeParser = new TypeParser(this);
             ExpressionParser expressionParser = new ExpressionParser(this);
             
@@ -204,9 +204,10 @@ namespace SystemVerilog2017Interpreter.Parsers
             (IdentifierDefinition? identifier, Expression? expression) previous = (null, null);
             foreach (var port in context.list_of_port_declarations_ansi_item())
             {
-                AttributeParser.VisitAttributeInstance(port.attribute_instance());
+                var attributes = new AttributeParser(this).VisitAttributeInstance(port.attribute_instance());
                 var declaration = port.ansi_port_declaration();
                 var portDeclaration = VisitANSIPortDeclaration(declaration, (previous.identifier, previous.expression));
+                portDeclaration.identifier.Attributes.AddRange(attributes);
                 portDeclaration.identifier.Document = CommentParser.Parse(port);
                 previous = portDeclaration;
                 yield return portDeclaration.identifier;
@@ -316,7 +317,7 @@ namespace SystemVerilog2017Interpreter.Parsers
         {
             string document = CommentParser.Parse(context);
             var attributeContext = context.attribute_instance();
-            AttributeParser.VisitAttributeInstance(attributeContext);
+            new AttributeParser(this).VisitAttributeInstance(attributeContext);
 
             TypeParser typeParser = new TypeParser(this);
 

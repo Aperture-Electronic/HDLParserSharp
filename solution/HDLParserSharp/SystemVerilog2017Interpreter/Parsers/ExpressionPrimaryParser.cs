@@ -164,7 +164,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             }
 
 #warning Visit the attriubte, but the attribute instance is not implemented now
-            AttributeParser.VisitAttributeInstance(context.attribute_instance());
+            new AttributeParser(this).VisitAttributeInstance(context.attribute_instance());
 
             if (context.KW_WITH() != null)
             {
@@ -210,7 +210,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             }
 
 #warning Visit the attriubte, but the attribute instance is not implemented now
-            AttributeParser.VisitAttributeInstance(context.attribute_instance());
+            new AttributeParser(this).VisitAttributeInstance(context.attribute_instance());
 
             if (context.KW_WITH() != null)
             {

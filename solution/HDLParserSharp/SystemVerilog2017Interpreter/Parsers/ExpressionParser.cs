@@ -166,7 +166,7 @@ namespace SystemVerilog2017Interpreter.Parsers
                 op = LiteralParser.VisitIncreaseDecreaseOperator(operatorContext, true);
                 expression = VisitVariableLeftValue(preContext.variable_lvalue());
 #warning Attributes are not implemented now
-                AttributeParser.VisitAttributeInstance(preContext.attribute_instance());
+                new AttributeParser(this).VisitAttributeInstance(preContext.attribute_instance());
             }
             else if (context is Inc_or_dec_expressionPostContext postContext)
             {
@@ -175,7 +175,7 @@ namespace SystemVerilog2017Interpreter.Parsers
                 op = LiteralParser.VisitIncreaseDecreaseOperator(operatorContext, false);
                 expression = VisitVariableLeftValue(postContext.variable_lvalue());
 #warning Attributes are not implemented now
-                AttributeParser.VisitAttributeInstance(postContext.attribute_instance());
+                new AttributeParser(this).VisitAttributeInstance(postContext.attribute_instance());
             }
             else
             {
@@ -228,7 +228,7 @@ namespace SystemVerilog2017Interpreter.Parsers
             foreach (var attributeContext in attrInstanceContext)
             {
 #warning Attributes are not implemented now
-                AttributeParser.VisitAttributeInstance(attributeContext);
+                new AttributeParser(this).VisitAttributeInstance(attributeContext);
             }
 
             // Primary expression
